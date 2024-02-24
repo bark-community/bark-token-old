@@ -1,9 +1,12 @@
+
+![BARK Hero Image](https://github.com/bark-community/bark-token/assets/bark-banner.png)
+
+
 # BARK Programs
 v1.0.0 Alpha
 
 <small>[![License: Apache](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)</small>
 
-![BARK Hero Image](https://github.com/bark-community/bark-token/assets/bark-banner.png)
 
 The BARK Program is developed to support the ecosystem of a decentralized application (DApp), supporting the Solana 2022 Token Standard (Extension). It is built on the Solana blockchain, facilitating the creation, transfer, and management of the BARK tokens and transaction fees. BARK is a digital asset on the Solana blockchain driven by community contributions.
 

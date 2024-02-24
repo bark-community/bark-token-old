@@ -115,6 +115,8 @@ The program provides functions to check the BARK token balance of a wallet and t
 
 ## Getting Started<a name="getting-started"></a>
 
+Tested Solana Playground.
+
 ### Prerequisites
 
 Before you begin, make sure you have the following prerequisites installed on your machine:
@@ -139,7 +141,7 @@ Before you begin, make sure you have the following prerequisites installed on yo
    git clone https://github.com/bark-community/bark-token.git
    ```
 
-2. Build the Rust smart contract:
+2. Build the Rust program (smart contract):
 
    ```bash
    cd bark-token/program

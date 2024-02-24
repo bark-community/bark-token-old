@@ -184,4 +184,3 @@ Contributions are welcome! Please read our [Contribution Guidelines](CONTRIBUTIN
 ## License<a name="license"></a>
 
 [Apache License 2.0](LICENSE).
-```

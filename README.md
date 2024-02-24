@@ -37,7 +37,7 @@ The BARK Program leverages the Solana blockchain for its decentralized infrastru
 
 The core logic of the BARK Program is implemented in Rust, a powerful and efficient programming language for building programs (smart contracts) on Solana.
 
-### Anchor Framework
+### Anchor: Solana Sealevel Framework
 
 The Anchor framework is utilized to enhance the modularity and simplicity of the BARK Token Program. Anchor provides high-level abstractions for building Solana programs, making development more accessible and efficient.
 
@@ -128,7 +128,7 @@ Before you begin, make sure you have the following prerequisites installed on yo
 - **Anchor CLI**: The Anchor framework is used to enhance the modularity of the BARK Token Program. Install the Anchor CLI using the following command:
 
   ```bash
-  npm install -g @project-serum/anchor
+  npm install -g @coral-xyz/anchor
   ```
 
 ### Installation
@@ -181,5 +181,5 @@ Contributions are welcome! Please read our [Contribution Guidelines](CONTRIBUTIN
 
 ## License<a name="license"></a>
 
-This project is licensed under the [Apache License 2.0](LICENSE).
+[Apache License 2.0](LICENSE).
 ```

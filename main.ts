@@ -41,12 +41,12 @@ const COMMITMENT_LEVEL = "confirmed";
 const clusterUrl = clusterApiUrl("devnet");
 const TOKEN_2022_PROGRAM_ID = new PublicKey("TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb");
 
+// Define LAMPORTS_PER_SOL
+const LAMPORTS_PER_SOL = 1000000000; // 1 SOL = 1,000,000,000 lamports
+
 // Burning Mechanism and Configuration
 const BURN_START_QUARTER = 3; // Burning starts on Q3, 2024
 const BURN_RATE = 0.02; // 2% quarterly burning rate
-
-// Define LAMPORTS_PER_SOL
-const LAMPORTS_PER_SOL = 1000000000; // 1 SOL = 1,000,000,000 lamports
 
 // Connection to devnet cluster
 const connection = await initializeConnection();
@@ -62,6 +62,7 @@ const mint = mintKeypair.publicKey;
 const mintAuthority = pg.wallet.publicKey; // Ensure that `pg` is defined
 const transferFeeConfigAuthority = pg.wallet.keypair;
 const withdrawWithheldAuthority = pg.wallet.keypair;
+const burnAuthority = pg.wallet.keypair; // Burn authority added
 
 // Calculate minimum balance for rent exemption
 const mintLen = getMintLen([ExtensionType.TransferFeeConfig]);
@@ -394,66 +395,6 @@ async function checkBalance() {
   }
 }
 
-// Function to get the current quarter
-function getCurrentQuarter() {
-  const currentDate = new Date();
-  const currentYear = currentDate.getFullYear();
-  const currentMonth = currentDate.getMonth() + 1; // Month is zero-based
-  const quarters = [1, 2, 3, 4];
-
-  if (currentMonth <= 3) {
-    return { year: currentYear, quarter: quarters[0] };
-  } else if (currentMonth <= 6) {
-    return { year: currentYear, quarter: quarters[1] };
-  } else if (currentMonth <= 9) {
-    return { year: currentYear, quarter: quarters[2] };
-  } else {
-    return { year: currentYear, quarter: quarters[3] };
-  }
-}
-
-// Function to check if burning is active
-function isBurningActive() {
-  const currentQuarter = getCurrentQuarter();
-  return currentQuarter.year > 2024 || (currentQuarter.year === 2024 && currentQuarter.quarter >= BURN_START_QUARTER);
-}
-
-// Function to calculate the burned amount based on the burning rate
-function calculateBurnAmount(totalAmount) {
-  return Math.ceil(totalAmount * BURN_RATE);
-}
-
-// Function to handle burning
-async function burnTokensIfActive(tokenAccount, amount) {
-  try {
-    if (isBurningActive()) {
-      const burnAmount = calculateBurnAmount(amount);
-
-      const burnSignature = await transferCheckedWithFee(
-        connection,
-        payerWallet,
-        tokenAccount,
-        mint,
-        tokenAccount, // Burned tokens will be sent to the same account
-        payerWallet.publicKey,
-        BigInt(burnAmount),
-        0,
-        0,
-        undefined,
-        undefined,
-        TOKEN_2022_PROGRAM_ID,
-      );
-
-      logTransactionDetails(`Burned ${burnAmount} tokens`, burnSignature);
-    } else {
-      console.log("Burning is not active for the current quarter.");
-    }
-  } catch (error) {
-    console.error("Error burning tokens:", error.message);
-    throw new Error("Failed to burn tokens");
-  }
-}
-
 // Main function to orchestrate the entire process.
 async function main() {
   try {
@@ -477,6 +418,14 @@ async function main() {
 
     await harvestWithheldTokensToMint(mint, existingFeeAccount);
     await withdrawFees(destinationTokenAccount, [], true);
+
+    // Burning Mechanism
+    const currentQuarter = getCurrentQuarter();
+    if (currentQuarter >= BURN_START_QUARTER) {
+      const burnAmount = calculateBurnAmount(MINT_AMOUNT);
+      await burnTokens(sourceTokenAccount, burnAmount);
+    }
+
   } catch (error) {
     console.error("Main process error:", error.message);
   }
@@ -484,3 +433,41 @@ async function main() {
 
 // Execute the main function
 main();
+
+// Function to calculate burn amount based on burning rate
+function calculateBurnAmount(amount) {
+  return BigInt(Math.floor(Number(amount) * BURN_RATE));
+}
+
+// Function to get the current quarter
+function getCurrentQuarter() {
+  const currentYear = new Date().getFullYear();
+  const currentMonth = new Date().getMonth() + 1;
+  const startQuarter = new Date(`${currentYear}-01-01`);
+  const quarters = Math.floor((currentMonth - 1) / 3) + 1;
+  return quarters;
+}
+
+// Function to burn tokens
+async function burnTokens(tokenAccount, burnAmount) {
+  try {
+    const burnSignature = await transferCheckedWithFee(
+      connection,
+      payerWallet,
+      tokenAccount,
+      mint,
+      null, // Burn authority doesn't require a destination account
+      payerWallet.publicKey,
+      burnAmount,
+      0,
+      0,
+      undefined,
+      undefined,
+      TOKEN_2022_PROGRAM_ID,
+    );
+    logTransactionDetails("Burn Tokens", burnSignature);
+  } catch (error) {
+    console.error("Error burning tokens:", error.message);
+    throw new Error("Failed to burn tokens");
+  }
+}

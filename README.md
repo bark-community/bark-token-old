@@ -5,7 +5,7 @@
 # BARK Programs
 v1.0.0 Alpha
 
-<small>[![License: MIT](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/MIT)</small>
+<small>[![License: MIT](https://img.shields.io/badge/License-mit-blue.svg)](https://opensource.org/licenses/mit)</small>
 
 The BARK Token Program is a Solana-based smart contract that facilitates the creation, transfer, and management of BARK tokens on the Solana blockchain. BARK is a digital asset with additional features, including a transfer fee mechanism and a burning mechanism.
 

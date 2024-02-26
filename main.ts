@@ -48,7 +48,7 @@ const config = {
 };
 
 // Connection to devnet cluster
-const connection = await initializeConnection();
+const connection = new Connection(config.clusterUrl, config.COMMITMENT_LEVEL);
 
 // BARK wallet
 const payerWallet = pg.wallet.keypair; // Ensure that `pg` is defined

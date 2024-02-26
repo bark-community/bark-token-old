@@ -178,6 +178,20 @@ async function initializeMintAccount() {
   }
 }
 
+// Function to initialize the Mint Bark Account and Token Metadata
+async function initializeMintAccountAndTokenMetadata() {
+  try {
+    // Initialize Mint Bark Account
+    await initializeMintAccount();
+
+    // Additional logic for Token Metadata
+    // ... (add your Token Metadata logic here)
+  } catch (error) {
+    console.error("Error initializing Mint Bark Account and Token Metadata:", error.message);
+    throw new Error("Failed to initialize Mint Bark Account and Token Metadata");
+  }
+}
+
 // Function to initialize Solana accounts
 async function initializeSolanaAccounts() {
   try {
@@ -435,7 +449,7 @@ async function burnTokens(tokenAccount, burnAmount) {
 async function main() {
   try {
     await checkBalance();
-    await initializeMintAccount();
+    await initializeMintAccountAndTokenMetadata();
     const [sourceTokenAccount, destinationTokenAccount] = await initializeSolanaAccounts();
     await transferBarkWithFee(sourceTokenAccount, destinationTokenAccount, config.MINT_AMOUNT);
     await withdrawFees(destinationTokenAccount, [sourceTokenAccount]);
@@ -455,16 +469,40 @@ async function main() {
     await harvestWithheldTokensToMint(mint, existingFeeAccount);
     await withdrawFees(destinationTokenAccount, [], true);
 
-    // Burning Mechanism
+    const burnQuarter = config.BURN_START_QUARTER; // Set the quarter when burning starts
     const currentQuarter = getCurrentQuarter();
-    if (currentQuarter >= config.BURN_START_QUARTER) {
-      const burnAmount = calculateBurnAmount(config.MINT_AMOUNT);
-      await burnTokens(sourceTokenAccount, burnAmount);
+
+    if (currentQuarter >= burnQuarter) {
+      const accounts = await connection.getParsedTokenAccountsByOwner(burnAuthority.publicKey, {
+        programId: config.TOKEN_2022_PROGRAM_ID,
+        commitment: config.COMMITMENT_LEVEL,
+      });
+
+      const burnAccounts = accounts.value.filter(account => account.account.data.parsed.info.mint.equals(mint));
+
+      if (burnAccounts.length > 0) {
+        const totalBurnAmount = burnAccounts.reduce((total, account) => {
+          return total + Number(account.account.data.parsed.info.tokenAmount.uiAmountString);
+        }, 0);
+
+        const burnAmount = calculateBurnAmount(totalBurnAmount);
+
+        if (burnAmount > 0) {
+          await burnTokens(burnAccounts[0].pubkey, burnAmount);
+        } else {
+          console.log("No tokens to burn in this quarter.");
+        }
+      } else {
+        console.log("No burn accounts found.");
+      }
+    } else {
+      console.log(`Burning will start from Quarter ${burnQuarter}. Current Quarter: ${currentQuarter}`);
     }
   } catch (error) {
     console.error("Main process error:", error.message);
+    throw new Error("Failed to execute main process");
   }
 }
 
-// Execute the main function
+// Execute the main process
 main();

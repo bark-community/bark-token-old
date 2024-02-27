@@ -15,6 +15,47 @@ The BARK Token Program is a smart contract built on the Solana blockchain, facil
 
 - **Burning Mechanism**: A burning mechanism burns a percentage of BARK tokens each quarter, starting from a specified quarter.
 
+Certainly! The function `withdrawFees` in the code is responsible for withdrawing accumulated fees from the destination account. Let me provide a more detailed explanation:
+
+### Withdraw Fees
+
+In the BARK Token Program, fees are associated with token transfers. These fees are accumulated in a designated fee account, and the `withdrawFees` function is designed to withdraw these fees from the fee account and transfer them back to the BARK Mint Account.
+
+Here's how the process works:
+
+1. **Fee Accumulation**: When BARK tokens are transferred, a fee is charged based on the configured fee structure (basis points and maximum fee). The collected fees are stored in a fee account associated with the destination account.
+
+2. **Withdrawal**: The `withdrawFees` function identifies the fee accounts associated with the destination account and withdraws the accumulated fees.
+
+3. **Transfer to Mint Account**: After withdrawing the fees, the function initiates a transfer of the withdrawn fees from the fee account to the BARK Mint Account. This ensures that the fees are consolidated back into the main Mint Account for further management or redistribution.
+
+The overall purpose of this process is to centralize and manage the fees collected during token transfers. It provides a mechanism to handle and redistribute fees, contributing to the overall governance and sustainability of the BARK Token Program.
+
+Certainly! Here's an updated section in the documentation to include an explanation of the "Withdraw Fees Again" process:
+
+```markdown
+## Usage
+
+...
+
+7. **Transfer BARK Again**: Perform another BARK transfer.
+
+8. **Harvest Fees to Mint**: Harvest accumulated fees and transfer them back to the BARK Mint Account.
+
+9. **Withdraw Fees Again**: Withdraw fees from the destination account.
+
+   The `withdrawFees` function is responsible for withdrawing accumulated fees from the destination account. Fees associated with token transfers are accumulated in a designated fee account, and this function identifies the fee accounts associated with the destination account. It then withdraws the accumulated fees and transfers them back to the BARK Mint Account. This ensures that fees are centrally managed and can be redistributed or used for further governance purposes.
+
+   ```javascript
+   // Example usage of withdrawFees function
+   await withdrawFees(destinationTokenAccount, [sourceTokenAccount]);
+   ```
+
+10. **Burning Mechanism**: Check the current quarter, and if the burning quarter is reached, calculate and burn a percentage of BARK tokens.
+
+...
+```
+
 ## Getting Started
 
 ### Prerequisites

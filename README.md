@@ -105,6 +105,8 @@ The BARK Token Program is a Solana-based smart contract designed to facilitate t
 
 10. **Burning Mechanism**: Check the current quarter, and if the burning quarter is reached, calculate and burn a percentage of BARK tokens.
 
+- Burning will start from Quarter 3. Current Quarter: 1
+
    ```javascript
    // Example usage of burnTokens function
    await burnTokens(burnAccounts[0].pubkey, burnAmount);

@@ -27,7 +27,6 @@ import {
   createInitializeInstruction,
   createUpdateFieldInstruction,
   createRemoveKeyInstruction,
-  pack,
   TokenMetadata,
 } from "@solana/spl-token-metadata";
 
@@ -51,17 +50,17 @@ const config = {
 const connection = new Connection(config.clusterUrl, config.COMMITMENT_LEVEL);
 
 // BARK wallet
-const payerWallet = pg.wallet.keypair; // Ensure that `pg` is defined
+const payerWallet = pg.wallet.keypair;
 
 // Generate a new keypair for the Mint BARK Account
 const mintKeypair = Keypair.generate();
 const mint = mintKeypair.publicKey;
 
 // BARK Mint Authority and Transfer Fee Config Authority
-const mintAuthority = pg.wallet.publicKey; // Ensure that `pg` is defined
+const mintAuthority = pg.wallet.publicKey;
 const transferFeeConfigAuthority = pg.wallet.keypair;
 const withdrawWithheldAuthority = pg.wallet.keypair;
-const burnAuthority = pg.wallet.keypair; // Burn authority added
+const burnAuthority = pg.wallet.keypair;
 
 // Calculate minimum balance for rent exemption
 const mintLen = getMintLen([ExtensionType.TransferFeeConfig]);
@@ -237,7 +236,7 @@ async function transferBarkWithFee(sourceTokenAccount, destinationTokenAccount, 
     console.log(`Source account balance before transfer: ${sourceAccountBalance}`);
 
     if (sourceAccountBalance < config.TRANSFER_AMOUNT) {
-      console.error("Insufficient balance in source account for transfer.");
+      console.error("Insufficient balance in the source account for transfer.");
       return;
     }
 
@@ -429,7 +428,7 @@ async function burnTokens(tokenAccount, burnAmount) {
       payerWallet,
       tokenAccount,
       mint,
-      null, // Burn authority doesn't require a destination account
+      null,
       payerWallet.publicKey,
       burnAmount,
       0,
@@ -463,13 +462,13 @@ async function main() {
       const newFeeAccount = await createFeeAccount(payerWallet);
       console.log(`Using the newly created fee account: ${newFeeAccount.toBase58()}`);
     } else {
-      console.log(`Using existing fee account: ${existingFeeAccount}`);
+      console.log(`Using the existing fee account: ${existingFeeAccount}`);
     }
 
     await harvestWithheldTokensToMint(mint, existingFeeAccount);
     await withdrawFees(destinationTokenAccount, [], true);
 
-    const burnQuarter = config.BURN_START_QUARTER; // Set the quarter when burning starts
+    const burnQuarter = config.BURN_START_QUARTER;
     const currentQuarter = getCurrentQuarter();
 
     if (currentQuarter >= burnQuarter) {
@@ -500,7 +499,7 @@ async function main() {
     }
   } catch (error) {
     console.error("Main process error:", error.message);
-    throw new Error("Failed to execute main process");
+    throw new Error("Failed to execute the main process");
   }
 }
 

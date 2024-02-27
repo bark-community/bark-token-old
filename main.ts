@@ -69,14 +69,14 @@ const lamports = await connection.getMinimumBalanceForRentExemption(mintLen);
 
 // BARK metadata to store in the Mint Account
 const metaData: TokenMetadata = {
-  updateAuthority: mintAuthority, // Replace with the appropriate authority
+  updateAuthority: mintAuthority,
   name: "BARK",
   symbol: "BARK",
   uri: "https://raw.githubusercontent.com/bark-community/bark-token/bob/main/src/assets/bark.png",
-  media: {
+  extensions: {
     website: "https://barkprotocol.net",
     socialMedia: {
-      twitter: "https://x.com/bark_protocol",
+      twitter: "https://twitter.com/bark_protocol",
       discord: "https://discord.gg/bark-protocol-en",
       telegram: "https://telegram.com/t.me/bark_protocol",
       additionalMetadata: [

@@ -114,7 +114,29 @@ The BARK Token Program is a Solana-based smart contract designed to facilitate t
 
 For detailed documentation, architecture, and how the BARK Token Program works, refer to the [BARK Token Program Documentation](./docs/BARK_TOKEN_DOCUMENTATION.md).
 
+Certainly! Here's an expanded version of your ToDo list with additional details and steps:
 
+## ToDo List:
+
+1. **Configuration Module:**
+   - [ ] Create a new file (e.g., `config.js`) to act as the configuration module.
+   - [ ] Export a configuration object containing all relevant constants and configuration parameters.
+
+2. **Function Decomposition:**
+   - [ ] Identify functions that can be broken down into smaller, focused functions.
+   - [ ] Create new functions with clear responsibilities and names that reflect their purpose.
+   - [ ] Ensure that each function has a single responsibility.
+
+3. **Treasury Account / Wallet Logic:**
+   - [ ] Define the Treasury Account/Wallet address in your code.
+   - [ ] Create a new function (`sendToTreasury`) to handle the transfer of BARK tokens to the Treasury Account.
+   - [ ] Integrate the `sendToTreasury` function where appropriate in your main process.
+
+4. **Document Update:**
+   - [ ] Open your project's documentation file (e.g., `README.md`).
+   - [ ] Update the document with the latest changes, new features, and improvements.
+   - [ ] Include details about the Treasury Account logic and any other significant updates.
+   - [ ] Provide clear instructions for users on how to utilize the new features.
 
 ## Contributing
 

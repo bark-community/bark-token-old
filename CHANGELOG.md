@@ -4,6 +4,8 @@
 
 This code has several improvements, error handling, and added functionalities. Some of the key changes include:
 
+- updated code incorporates improvements, enhances logic, and provides better structure for the Solana token operations. 
+
 - Improved Error Handling: Added error handling throughout the code to catch and log errors, preventing unexpected crashes.
 
 - Logging Transactions: Added a logTransactionDetails function to log transaction details, including the transaction signature.
@@ -25,4 +27,4 @@ This code has several improvements, error handling, and added functionalities. S
 - Added the burnTokens function to initiate the burning process at the end of the main process.
 
 - Called the burnTokens function at the end of the main function to burn tokens based on the configured burning mechanism.
-  
+

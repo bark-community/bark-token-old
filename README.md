@@ -114,6 +114,8 @@ The BARK Token Program is a Solana-based smart contract designed to facilitate t
 
 For detailed documentation, architecture, and how the BARK Token Program works, refer to the [BARK Token Program Documentation](./docs/BARK_TOKEN_DOCUMENTATION.md).
 
+
+
 ## Contributing
 
 Feel free to contribute by opening issues, proposing new features, or submitting pull requests. Contributions are welcome!

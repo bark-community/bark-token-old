@@ -16,7 +16,6 @@ import {
   createInitializeTransferFeeConfigInstruction,
   getMintLen,
   getTransferFeeAmount,
-  harvestWithheldTokensToMint as harvestWithheldTokensToMintModule,
   mintTo,
   transferCheckedWithFee,
   unpackAccount,
@@ -25,8 +24,6 @@ import {
 
 import {
   createInitializeInstruction,
-  createUpdateFieldInstruction,
-  createRemoveKeyInstruction,
   TokenMetadata,
 } from "@solana/spl-token-metadata";
 
@@ -43,6 +40,7 @@ const config = {
   BURN_WALLET_ADDRESS: "BURNF5qPfU1A9wSYCB4x4VUwQd398VHqwMHCCsDhp134",
   LAMPORTS_PER_SOL: 1000000000,
   BURN_START_QUARTER: 3,
+  BURN_START_YEAR: 2024,
   BURN_RATE: 0.02,
 };
 
@@ -50,14 +48,14 @@ const config = {
 const connection = new Connection(config.clusterUrl, config.COMMITMENT_LEVEL);
 
 // BARK wallet
-const payerWallet = pg.wallet.keypair;
+const payerWallet = pg.wallet.keypair; // Ensure that `pg` is defined
 
 // Generate a new keypair for the Mint BARK Account
 const mintKeypair = Keypair.generate();
 const mint = mintKeypair.publicKey;
 
 // BARK Mint Authority and Transfer Fee Config Authority
-const mintAuthority = pg.wallet.publicKey;
+const mintAuthority = pg.wallet.publicKey; // Ensure that `pg` is defined
 const transferFeeConfigAuthority = pg.wallet.keypair;
 const withdrawWithheldAuthority = pg.wallet.keypair;
 const burnAuthority = pg.wallet.keypair;
@@ -172,22 +170,22 @@ async function initializeMintAccount() {
     const transactionSignature = await createSolanaAccountWithSignature(transaction, [payerWallet, mintKeypair]);
     logTransactionDetails("Create Solana Account", transactionSignature);
   } catch (error) {
-    console.error("Error initializing Mint Bark Account:", error.message);
-    throw new Error("Failed to initialize Mint Bark Account");
+    console.error("Error initializing Mint BARK Account:", error.message);
+    throw new Error("Failed to initialize Mint BARK Account");
   }
 }
 
-// Function to initialize the Mint Bark Account and Token Metadata
+// Function to initialize the Mint BARK Account and Token Metadata
 async function initializeMintAccountAndTokenMetadata() {
   try {
-    // Initialize Mint Bark Account
+    // Initialize Mint BARK Account
     await initializeMintAccount();
 
     // Additional logic for Token Metadata
     // ... (add your Token Metadata logic here)
   } catch (error) {
-    console.error("Error initializing Mint Bark Account and Token Metadata:", error.message);
-    throw new Error("Failed to initialize Mint Bark Account and Token Metadata");
+    console.error("Error initializing Mint BARK Account and Token Metadata:", error.message);
+    throw new Error("Failed to initialize Mint BARK Account and Token Metadata");
   }
 }
 
@@ -236,7 +234,7 @@ async function transferBarkWithFee(sourceTokenAccount, destinationTokenAccount, 
     console.log(`Source account balance before transfer: ${sourceAccountBalance}`);
 
     if (sourceAccountBalance < config.TRANSFER_AMOUNT) {
-      console.error("Insufficient balance in the source account for transfer.");
+      console.error("Insufficient balance in source account for transfer.");
       return;
     }
 
@@ -420,7 +418,7 @@ function getCurrentQuarter() {
   return quarters;
 }
 
-// Function to burn tokens
+/// Function to burn tokens
 async function burnTokens(tokenAccount, burnAmount) {
   try {
     const burnSignature = await transferCheckedWithFee(
@@ -428,7 +426,7 @@ async function burnTokens(tokenAccount, burnAmount) {
       payerWallet,
       tokenAccount,
       mint,
-      null,
+      null, // Burn authority doesn't require a destination account
       payerWallet.publicKey,
       burnAmount,
       0,
@@ -458,17 +456,17 @@ async function main() {
     const existingFeeAccountInfo = await connection.getAccountInfo(new PublicKey(existingFeeAccount), config.COMMITMENT_LEVEL);
 
     if (!existingFeeAccountInfo) {
-      console.log(`Fee account ${existingFeeAccount} not found. Creating a new fee account...`);
+      console.log(`Fee account ${existingFeeAccount} not found or implemented. Creating a new fee account...`);
       const newFeeAccount = await createFeeAccount(payerWallet);
       console.log(`Using the newly created fee account: ${newFeeAccount.toBase58()}`);
     } else {
-      console.log(`Using the existing fee account: ${existingFeeAccount}`);
+      console.log(`Using existing fee account: ${existingFeeAccount}`);
     }
 
     await harvestWithheldTokensToMint(mint, existingFeeAccount);
     await withdrawFees(destinationTokenAccount, [], true);
 
-    const burnQuarter = config.BURN_START_QUARTER;
+    const burnQuarter = config.BURN_START_QUARTER; // Set the quarter when burning starts
     const currentQuarter = getCurrentQuarter();
 
     if (currentQuarter >= burnQuarter) {
@@ -489,7 +487,7 @@ async function main() {
         if (burnAmount > 0) {
           await burnTokens(burnAccounts[0].pubkey, burnAmount);
         } else {
-          console.log("No tokens to burn in this quarter.");
+          console.log("No BARK tokens to burn in this quarter.");
         }
       } else {
         console.log("No burn accounts found.");
@@ -499,7 +497,7 @@ async function main() {
     }
   } catch (error) {
     console.error("Main process error:", error.message);
-    throw new Error("Failed to execute the main process");
+    throw new Error("Failed to execute main process");
   }
 }
 

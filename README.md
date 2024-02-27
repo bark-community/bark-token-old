@@ -133,7 +133,7 @@ Certainly! Here's an expanded version of your ToDo list with additional details 
    - [ ] Integrate the `sendToTreasury` function where appropriate in your main process.
 
 4. **Documentation:**
-   - [ ] Create separate docs, with changes, new features, and improvements.
+   - [ ] Add changes, new features, and improvements.
    - [ ] Provide clear instructions for users on how to utilize the new features.
 
 ## Contributing

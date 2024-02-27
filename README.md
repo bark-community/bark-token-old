@@ -132,10 +132,8 @@ Certainly! Here's an expanded version of your ToDo list with additional details 
    - [ ] Create a new function (`sendToTreasury`) to handle the transfer of BARK tokens to the Treasury Account.
    - [ ] Integrate the `sendToTreasury` function where appropriate in your main process.
 
-4. **Document Update:**
-   - [ ] Open your project's documentation file (e.g., `README.md`).
-   - [ ] Update the document with the latest changes, new features, and improvements.
-   - [ ] Include details about the Treasury Account logic and any other significant updates.
+4. **Documentation:**
+   - [ ] Create separate docs, with changes, new features, and improvements.
    - [ ] Provide clear instructions for users on how to utilize the new features.
 
 ## Contributing

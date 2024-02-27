@@ -3,58 +3,17 @@
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
 
-The BARK Token Program is a smart contract built on the Solana blockchain, facilitating the creation, transfer, and management of BARK tokens. BARK is a digital asset featuring additional functionalities such as a transfer fee mechanism and a burning mechanism.
+The BARK Token Program is a Solana-based smart contract designed to facilitate the creation, transfer, and management of BARK tokens on the Solana blockchain. BARK is a digital asset with advanced features, including a transfer fee mechanism and a burning mechanism.
 
 ## Features
 
 - **Minting BARK Tokens**: Create new BARK tokens by initializing the BARK Mint Account.
 
-- **Transfer with Fee**: Transfer BARK tokens with an associated fee, calculated based on the configured basis points and a maximum fee.
+- **Transfer with Fee**: Transfer BARK tokens from one account to another with an associated fee, calculated based on the configured basis points and a maximum fee.
 
 - **Fee Harvesting**: Accumulated fees in fee accounts can be harvested and transferred back to the BARK Mint Account.
 
 - **Burning Mechanism**: A burning mechanism burns a percentage of BARK tokens each quarter, starting from a specified quarter.
-
-Certainly! The function `withdrawFees` in the code is responsible for withdrawing accumulated fees from the destination account. Let me provide a more detailed explanation:
-
-### Withdraw Fees
-
-In the BARK Token Program, fees are associated with token transfers. These fees are accumulated in a designated fee account, and the `withdrawFees` function is designed to withdraw these fees from the fee account and transfer them back to the BARK Mint Account.
-
-Here's how the process works:
-
-1. **Fee Accumulation**: When BARK tokens are transferred, a fee is charged based on the configured fee structure (basis points and maximum fee). The collected fees are stored in a fee account associated with the destination account.
-
-2. **Withdrawal**: The `withdrawFees` function identifies the fee accounts associated with the destination account and withdraws the accumulated fees.
-
-3. **Transfer to Mint Account**: After withdrawing the fees, the function initiates a transfer of the withdrawn fees from the fee account to the BARK Mint Account. This ensures that the fees are consolidated back into the main Mint Account for further management or redistribution.
-
-The overall purpose of this process is to centralize and manage the fees collected during token transfers. It provides a mechanism to handle and redistribute fees, contributing to the overall governance and sustainability of the BARK Token Program.
-
-Certainly! Here's an updated section in the documentation to include an explanation of the "Withdraw Fees Again" process:
-
-```markdown
-## Usage
-
-...
-
-7. **Transfer BARK Again**: Perform another BARK transfer.
-
-8. **Harvest Fees to Mint**: Harvest accumulated fees and transfer them back to the BARK Mint Account.
-
-9. **Withdraw Fees Again**: Withdraw fees from the destination account.
-
-   The `withdrawFees` function is responsible for withdrawing accumulated fees from the destination account. Fees associated with token transfers are accumulated in a designated fee account, and this function identifies the fee accounts associated with the destination account. It then withdraws the accumulated fees and transfers them back to the BARK Mint Account. This ensures that fees are centrally managed and can be redistributed or used for further governance purposes.
-
-   ```javascript
-   // Example usage of withdrawFees function
-   await withdrawFees(destinationTokenAccount, [sourceTokenAccount]);
-   ```
-
-10. **Burning Mechanism**: Check the current quarter, and if the burning quarter is reached, calculate and burn a percentage of BARK tokens.
-
-...
-```
 
 ## Getting Started
 
@@ -66,20 +25,20 @@ Certainly! Here's an updated section in the documentation to include an explanat
 
 ### Installation
 
-1. Clone the repository:
+1. **Clone the repository:**
 
    ```bash
    git clone https://github.com/bark-community/bark-token.git
    cd bark-token
    ```
 
-2. Install dependencies:
+2. **Install dependencies:**
 
    ```bash
    npm install
    ```
 
-3. Build the project:
+3. **Build the project:**
 
    ```bash
    npm run build
@@ -93,19 +52,63 @@ Certainly! Here's an updated section in the documentation to include an explanat
 
 3. **Initialize Mint Account**: Create and initialize the BARK Mint Account.
 
+   ```javascript
+   // Example usage of initializeMintAccount function
+   await initializeMintAccount();
+   ```
+
 4. **Initialize Solana Accounts**: Create source and destination token accounts for BARK tokens.
+
+   ```javascript
+   // Example usage of initializeSolanaAccounts function
+   const [sourceTokenAccount, destinationTokenAccount] = await initializeSolanaAccounts();
+   ```
 
 5. **Transfer BARK with Fee**: Transfer BARK tokens from the source account to the destination account with an associated fee.
 
+   To initiate a BARK transfer with an associated fee, use the `transferBarkWithFee` function. This function not only transfers BARK tokens but also charges a fee based on the configured fee structure.
+
+   ```javascript
+   // Example usage of transferBarkWithFee function
+   await transferBarkWithFee(sourceTokenAccount, destinationTokenAccount, config.MINT_AMOUNT);
+   ```
+
 6. **Withdraw Fees**: Withdraw accumulated fees from the destination account.
+
+   To manage accumulated fees associated with token transfers, use the `withdrawFees` function. This function identifies fee accounts linked to the destination account, withdraws accumulated fees, and transfers them back to the BARK Mint Account.
+
+   ```javascript
+   // Example usage of withdrawFees function
+   await withdrawFees(destinationTokenAccount, [sourceTokenAccount]);
+   ```
 
 7. **Transfer BARK Again**: Perform another BARK transfer.
 
+   ```javascript
+   // Example usage of transferBarkWithFee function for a second transfer
+   await transferBarkWithFee(sourceTokenAccount, destinationTokenAccount, config.MINT_AMOUNT);
+   ```
+
 8. **Harvest Fees to Mint**: Harvest accumulated fees and transfer them back to the BARK Mint Account.
+
+   ```javascript
+   // Example usage of harvestWithheldTokensToMint function
+   await harvestWithheldTokensToMint(mint, existingFeeAccount);
+   ```
 
 9. **Withdraw Fees Again**: Withdraw fees from the destination account.
 
+   ```javascript
+   // Example usage of withdrawFees function for a second withdrawal
+   await withdrawFees(destinationTokenAccount, [], true);
+   ```
+
 10. **Burning Mechanism**: Check the current quarter, and if the burning quarter is reached, calculate and burn a percentage of BARK tokens.
+
+   ```javascript
+   // Example usage of burnTokens function
+   await burnTokens(burnAccounts[0].pubkey, burnAmount);
+   ```
 
 ### Documentation
 
@@ -117,5 +120,4 @@ Feel free to contribute by opening issues, proposing new features, or submitting
 
 ## License
 
-MIT License - see the [LICENSE](./LICENSE) file for details.
-
+MIT License [LICENSE](./LICENSE)

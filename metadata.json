@@ -1,6 +1,6 @@
 {
     "name": "BARK",
     "symbol": "BARK",
-    "description": "BARK, a digital asset on the Solana blockchain, is driven by community contributions.",
-    "image": "https://raw.githubusercontent.com/bark-community/bark-token/blob/main/src/assets/bark.svg"
+    "description": "BARK, a digital asset on the Solana blockchain, driven by community contributions.",
+    "image": "https://github.com/bark-community/bark-token/blob/ad733fcfef8b9da1e8c005bc7ac0d92e67d6006c/src/bark.png"
 }

@@ -1,9 +1,9 @@
-# BARK Token Program
-**Version 1.0.0 Alpha**
+# BARK Token Program with TypeScript and Anchor Integration
+**Version 1.0.1 Alpha**
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
 
-The BARK Token Program is a Solana-based smart contract designed to facilitate the creation, transfer, and management of BARK tokens on the Solana blockchain. BARK is a digital asset with advanced features, including a transfer fee mechanism and a burning mechanism.
+The BARK Token Program is a sophisticated Solana-based smart contract designed to streamline the creation, transfer, and management of BARK tokens on the Solana blockchain. This version includes integration with the TypeScript language and the Anchor framework for improved type safety and efficient program development.
 
 ## Features
 
@@ -13,7 +13,11 @@ The BARK Token Program is a Solana-based smart contract designed to facilitate t
 
 - **Fee Harvesting**: Accumulated fees in fee accounts can be harvested and transferred back to the BARK Mint Account.
 
+- **Metadata**: [To be updated]
+
 - **Burning Mechanism**: A burning mechanism burns a percentage of BARK tokens each quarter, starting from a specified quarter.
+
+- **Keypair Generation**: Generate Solana Keypairs for various accounts if not implemented or created.
 
 ## Getting Started
 
@@ -22,6 +26,8 @@ The BARK Token Program is a Solana-based smart contract designed to facilitate t
 - Node.js
 - Solana CLI
 - TypeScript
+- Anchor
+- Rust
 
 ### Installation
 
@@ -52,14 +58,14 @@ The BARK Token Program is a Solana-based smart contract designed to facilitate t
 
 3. **Initialize Mint Account**: Create and initialize the BARK Mint Account.
 
-   ```javascript
+   ```typescript
    // Example usage of initializeMintAccount function
    await initializeMintAccount();
    ```
 
 4. **Initialize Solana Accounts**: Create source and destination token accounts for BARK tokens.
 
-   ```javascript
+   ```typescript
    // Example usage of initializeSolanaAccounts function
    const [sourceTokenAccount, destinationTokenAccount] = await initializeSolanaAccounts();
    ```
@@ -68,7 +74,7 @@ The BARK Token Program is a Solana-based smart contract designed to facilitate t
 
    To initiate a BARK transfer with an associated fee, use the `transferBarkWithFee` function. This function not only transfers BARK tokens but also charges a fee based on the configured fee structure.
 
-   ```javascript
+   ```typescript
    // Example usage of transferBarkWithFee function
    await transferBarkWithFee(sourceTokenAccount, destinationTokenAccount, config.MINT_AMOUNT);
    ```
@@ -77,28 +83,28 @@ The BARK Token Program is a Solana-based smart contract designed to facilitate t
 
    To manage accumulated fees associated with token transfers, use the `withdrawFees` function. This function identifies fee accounts linked to the destination account, withdraws accumulated fees, and transfers them back to the BARK Mint Account.
 
-   ```javascript
+   ```typescript
    // Example usage of withdrawFees function
    await withdrawFees(destinationTokenAccount, [sourceTokenAccount]);
    ```
 
 7. **Transfer BARK Again**: Perform another BARK transfer.
 
-   ```javascript
+   ```typescript
    // Example usage of transferBarkWithFee function for a second transfer
    await transferBarkWithFee(sourceTokenAccount, destinationTokenAccount, config.MINT_AMOUNT);
    ```
 
 8. **Harvest Fees to Mint**: Harvest accumulated fees and transfer them back to the BARK Mint Account.
 
-   ```javascript
+   ```typescript
    // Example usage of harvestWithheldTokensToMint function
    await harvestWithheldTokensToMint(mint, existingFeeAccount);
    ```
 
 9. **Withdraw Fees Again**: Withdraw fees from the destination account.
 
-   ```javascript
+   ```typescript
    // Example usage of withdrawFees function for a second withdrawal
    await withdrawFees(destinationTokenAccount, [], true);
    ```
@@ -108,14 +114,42 @@ The BARK Token Program is a Solana-based smart contract designed to facilitate t
 - Token Burn Rate: 2% Quarterly
 - Burning will start from Quarter 3. Current Quarter: 1
 
-   ```javascript
+   ```typescript
    // Example usage of burnTokens function
    await burnTokens(burnAccounts[0].pubkey, burnAmount);
    ```
 
+11. **Keypair Generation**: Generate Solana Keypairs for various accounts.
+
+   ```typescript
+   // Example usage of keypair generation
+   const keypair = generateKeypair();
+   ```
+
+12. **Anchor Program Integration ToDo**
+
+   - [ ] Create a new Anchor program file (e.g., `bark-token.ts`).
+   - [ ] Define the necessary instructions, state, and accounts for the BARK Token program.
+   - [ ] Implement the integration logic with the existing BARK Token program.
+
+13. **Metadata Pointer**: [To be updated]
+
+14. **Features to Update**: [To be updated]
+
+15. **Controlling Tokens**: [To be updated]
+
+### TypeScript Integration ToDo
+
+- [ ] Update the project to use TypeScript for improved type safety and code clarity.
+  - [ ] Create TypeScript configurations (tsconfig.json).
+  - [ ] Refactor existing
+
+ code to TypeScript (.ts files).
+  - [ ] Ensure TypeScript types are used wherever applicable.
+
 ### Documentation
 
-For detailed documentation, architecture, and how the BARK Token Program works, refer to the [BARK Token Program Documentation](./docs/BARK_TOKEN_DOCUMENTATION.md).
+For detailed documentation, architecture, and how the BARK Token Program works with the Anchor framework and Sealevel, refer to the [BARK Token Program Documentation](./docs/BARK_TOKEN_DOCUMENTATION.md).
 
 ## ToDo List:
 

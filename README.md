@@ -142,12 +142,10 @@ The BARK Token Program is a sophisticated Solana-based smart contract designed t
 
 ### TypeScript Integration ToDo
 
-- [ ] Update the project to use TypeScript for improved type safety and code clarity.
-  - [ ] Create TypeScript configurations (tsconfig.json).
-  - [ ] Refactor existing
-
- code to TypeScript (.ts files).
-  - [ ] Ensure TypeScript types are used wherever applicable.
+   - [ ] Update the project to use TypeScript for improved type safety and code clarity.
+   - [ ] Create TypeScript configurations (tsconfig.json).
+   - [ ] Refactor existing code to TypeScript (.ts files).
+   - [ ] Ensure TypeScript types are used wherever applicable.
 
 ### Documentation
 

@@ -5,6 +5,8 @@
 
 The BARK Token Program is a sophisticated Solana-based smart contract designed to streamline the creation, transfer, and management of BARK tokens on the Solana blockchain. This version includes integration with the TypeScript language and the Anchor framework for improved type safety and efficient program development.
 
+**CA:** BARKhLzdWbyZiP3LNoD9boy7MrAy4CVXEToDyYGeEBKF
+
 ## Features
 
 - **Minting BARK Tokens**: Create new BARK tokens by initializing the BARK Mint Account.
@@ -161,6 +163,7 @@ For detailed documentation, architecture, and how the BARK Token Program works w
    - [ ] Identify functions that can be broken down into smaller, focused functions.
    - [ ] Create new functions with clear responsibilities and names that reflect their purpose.
    - [ ] Ensure that each function has a single responsibility.
+   - [ ] Develop BARK (BRK) Token Standard
 
 3. **Treasury Account / Wallet Logic:**
    - [ ] Define the Treasury Account/Wallet address in your code.

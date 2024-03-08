@@ -1,8 +1,6 @@
 # BARK Token Program
 
-The BARK Token-2022 program is an advanced implementation on the Solana blockchain, tailored to support both fungible and non-fungible tokens. This program offers a robust interface and implementation, empowering third parties to seamlessly create and manage BARK tokens on the Solana network.
-
-**CA:** BARKhLzdWbyZiP3LNoD9boy7MrAy4CVXEToDyYGeEBKF
+The BARK Token-2022 program is an advanced implementation of the Solana blockchain, tailored to support both fungible and non-fungible tokens. This program offers a robust interface and implementation, empowering third parties to seamlessly create and manage BARK tokens on the Solana network.
 
 ## Getting Started
 

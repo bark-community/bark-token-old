@@ -10,7 +10,7 @@ import {
 
 import {
   ExtensionType,
-  TOKEN_PROGRAM_ID,
+  TOKEN_2022_PROGRAM_ID,
   createAccount,
   createInitializeMintInstruction,
   createInitializeTransferFeeConfigInstruction,

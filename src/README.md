@@ -8,15 +8,44 @@ This repository contains the modular TypeScript implementation for the BARK Toke
 
 The project is organized into the `src/` folder and several files to handle specific functionalities:
 
-1. **`src/main.ts`**: Main functions and logic.
+1. **`main.ts`**: Main functions and logic.
+   - This file likely contains the entry point and orchestrates the overall execution of your BARK token functionalities.
+
 2. **`utils/config.ts`**: Contains configuration settings.
-3. **`utils/solana.ts`**: Handles Solana-related operations.
-4. **`mint.ts`**: Manages BARK Mint Account creation and initialization.
-5. **`src/token.ts`**: Manages BARK token-related operations.
-6. **`fees/transactionFees.ts`**: Handles fee-related operations, including fee account creation and withdrawal.
-7. **`metadata/metadata.ts`**: Manages Token Metadata operations.
-8. **`transactions/transactions.ts`**: Handles various transactions, including BARK transfers and burning.
-9. **`burning/burn.ts`**: Manages burning functionalities.
+   - Configuration settings such as fees, program IDs, and other constants are defined in this file.
+
+3. **`utils/helpers.ts`**: [To be updated]
+   - Helpers typically contain utility functions that assist in various tasks throughout your codebase.
+
+4. **`utils/error.ts`**: [To be updated]
+   - This file might include custom error classes or functions to handle errors gracefully.
+
+5. **`wallet.ts`**: [To be updated]
+   - Wallet-related operations, such as keypair generation or interaction with user wallets, might be implemented in this file.
+
+6. **`keypairs/secretKey.ts`**: [To be updated]
+   - This file might handle the generation and management of secret keys.
+
+7. **`utils/solana.ts`**: Handles Solana-related operations.
+   - This file contains functions for establishing connections, creating Solana accounts, and handling transactions.
+
+8. **`mint.ts`**: Manages BARK Mint Account creation and initialization.
+   - This file likely handles the creation and initialization of the BARK Mint Account.
+
+9. **`token.ts`**: Manages BARK token-related operations.
+   - BARK token-related functionalities, such as transfers and balance checks, are implemented in this file.
+
+10. **`fees/transactionFees.ts`**: Handles fee-related operations, including fee account creation and withdrawal.
+    - This file manages operations related to fees, including creating fee accounts and withdrawing fees.
+
+11. **`metadata/metadata.ts`**: Manages Token Metadata operations.
+    - Token metadata, such as name, symbol, and URI, is handled in this file.
+
+12. **`transactions/transactions.ts`**: Handles various transactions, including BARK transfers and burning.
+    - This file likely includes functions for executing different types of transactions involving BARK tokens.
+
+13. **`burning/burn.ts`**: Manages burning functionalities.
+    - Burning-related operations, including calculating burn amounts and executing burn transactions, are implemented here.
 
 ## Getting Started
 

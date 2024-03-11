@@ -12,7 +12,7 @@ The project is organized into the `src/` folder and several files to handle spec
 2. **`utils/config.ts`**: Contains configuration settings.
 3. **`utils/solana.ts`**: Handles Solana-related operations.
 4. **`mint.ts`**: Manages BARK Mint Account creation and initialization.
-5. **`token.ts`**: Manages BARK token-related operations.
+5. **`src/token.ts`**: Manages BARK token-related operations.
 6. **`fees/transactionFees.ts`**: Handles fee-related operations, including fee account creation and withdrawal.
 7. **`metadata/metadata.ts`**: Manages Token Metadata operations.
 8. **`transactions/transactions.ts`**: Handles various transactions, including BARK transfers and burning.

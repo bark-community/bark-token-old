@@ -3,7 +3,6 @@ import {
   Keypair,
   SystemProgram,
   Transaction,
-  TransactionInstruction,
   clusterApiUrl,
   sendAndConfirmTransaction,
   PublicKey,
@@ -12,26 +11,19 @@ import {
 import {
   ExtensionType,
   TOKEN_2022_PROGRAM_ID,
+  unpackAccount,
   createAccount,
+  getTransferFeeAmount,
   createInitializeMintInstruction,
   createInitializeTransferFeeConfigInstruction,
   getMintLen,
-  createInitializeMetadataPointerInstruction,
-  getTransferFeeAmount,
   mintTo,
   transferCheckedWithFee,
-  unpackAccount,
   withdrawWithheldTokensFromAccounts,
-  getMetadataPointerState,
-  getTokenMetadata,
-  TYPE_SIZE,
-  LENGTH_SIZE,
 } from "@solana/spl-token";
 
 import {
   createInitializeInstruction,
-  createUpdateFieldInstruction,
-  createRemoveKeyInstruction,
   pack,
   TokenMetadata,
 } from "@solana/spl-token-metadata";
@@ -151,31 +143,35 @@ async function createSolanaAccountWithSignature(instruction, signers = []) {
 // Function to initialize the Mint Bark Account
 async function initializeMintAccount() {
   try {
+    const createAccountInstruction = SystemProgram.createAccount({
+      fromPubkey: payerWallet.publicKey,
+      newAccountPubkey: mint,
+      space: mintLen,
+      lamports,
+      programId: config.TOKEN_2022_PROGRAM_ID,
+    });
+
+    const initializeTransferFeeConfigInstruction = createInitializeTransferFeeConfigInstruction(
+      mint,
+      transferFeeConfigAuthority.publicKey,
+      withdrawWithheldAuthority.publicKey,
+      config.FEE_BASIS_POINTS,
+      config.MAX_FEE,
+      config.TOKEN_2022_PROGRAM_ID,
+    );
+
+    const initializeMintInstruction = createInitializeMintInstruction(
+      mint,
+      config.DECIMALS,
+      mintAuthority,
+      null,
+      config.TOKEN_2022_PROGRAM_ID,
+    );
+
     const transaction = new Transaction()
-      .add(
-        SystemProgram.createAccount({
-          fromPubkey: payerWallet.publicKey,
-          newAccountPubkey: mint,
-          space: mintLen,
-          lamports,
-          programId: config.TOKEN_2022_PROGRAM_ID,
-        }),
-        createInitializeTransferFeeConfigInstruction(
-          mint,
-          transferFeeConfigAuthority.publicKey,
-          withdrawWithheldAuthority.publicKey,
-          config.FEE_BASIS_POINTS,
-          config.MAX_FEE,
-          config.TOKEN_2022_PROGRAM_ID,
-        ),
-        createInitializeMintInstruction(
-          mint,
-          config.DECIMALS,
-          mintAuthority,
-          null,
-          config.TOKEN_2022_PROGRAM_ID,
-        ),
-      );
+      .add(createAccountInstruction)
+      .add(initializeTransferFeeConfigInstruction)
+      .add(initializeMintInstruction);
 
     const transactionSignature = await createSolanaAccountWithSignature(transaction, [payerWallet, mintKeypair]);
     logTransactionDetails("Create Solana Account", transactionSignature);
@@ -193,9 +189,7 @@ async function initializeMintAccountAndTokenMetadata() {
 
     // Additional logic for Token Metadata
     // ... (add your Token Metadata logic here)
-  }
-
- catch (error) {
+  } catch (error) {
     console.error("Error initializing Mint BARK Account and Token Metadata:", error.message);
     throw new Error("Failed to initialize Mint BARK Account and Token Metadata");
   }

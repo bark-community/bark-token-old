@@ -183,9 +183,7 @@ For detailed documentation, architecture, and how the BARK Token Program works w
 3. **Treasury Account / Wallet Logic:**
    - [ ] Define the Treasury Account/Wallet address in your code.
    - [ ] Create a new function (`sendToTreasury`) to handle the transfer of BARK tokens to the Treasury Account.
-   - [
-
- ] Integrate the `sendToTreasury` function where appropriate in your main process.
+   - [ ] Integrate the `sendToTreasury` function where appropriate in your main process.
 
 4. **Documentation:**
    - [ ] Add changes, new features, and improvements.

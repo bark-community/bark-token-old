@@ -1,13 +1,20 @@
 # BARK Token Program with TypeScript and Anchor Integration
-**Version 1.0.1 Alpha**
+**Version 1.0.2 Alpha**
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
 
 The BARK Token Program is a sophisticated Solana-based smart contract designed to streamline the creation, transfer, and management of BARK tokens on the Solana blockchain. This version includes integration with the TypeScript language and the Anchor framework for improved type safety and efficient program development.
 
-**CA:** BARKhLzdWbyZiP3LNoD9boy7MrAy4CVXEToDyYGeEBKF
+## Networks
+
+- **Devnet:** BARKhLzdWbyZiP3LNoD9boy7MrAy4CVXEToDyYGeEBKF
+- **Testnet:**
+- **Mainnet:**
+
+*Notice: This program is developed on the Devnet and tested on Solana Playground.*
 
 ## Features
+...
 
 - **Minting BARK Tokens**: Create new BARK tokens by initializing the BARK Mint Account.
 
@@ -15,11 +22,13 @@ The BARK Token Program is a sophisticated Solana-based smart contract designed t
 
 - **Fee Harvesting**: Accumulated fees in fee accounts can be harvested and transferred back to the BARK Mint Account.
 
-- **Metadata**: [To be updated]
+- **Metadata Integration**: Add detailed information about the BARK token, such as name, symbol, URI, and extensions.
 
 - **Burning Mechanism**: A burning mechanism burns a percentage of BARK tokens each quarter, starting from a specified quarter.
 
 - **Keypair Generation**: Generate Solana Keypairs for various accounts if not implemented or created.
+
+- **CoinMarketCap API Integration**: Retrieve real-time market data for the BARK token using the CoinMarketCap API.
 
 ## Getting Started
 
@@ -50,6 +59,15 @@ The BARK Token Program is a sophisticated Solana-based smart contract designed t
 
    ```bash
    npm run build
+   ```
+
+4. **Configure API Keys:**
+
+   Create a `config` folder in the `src` directory and add an `index.ts` file to store API keys:
+
+   ```typescript
+   // src/config/index.ts
+   export const COINMARKETCAP_API_KEY = 'YOUR_COINMARKETCAP_API_KEY';
    ```
 
 ### Usage
@@ -113,8 +131,8 @@ The BARK Token Program is a sophisticated Solana-based smart contract designed t
 
 10. **Burning Mechanism**: Check the current quarter, and if the burning quarter is reached, calculate and burn a percentage of BARK tokens.
 
-- Token Burn Rate: 2% Quarterly
-- Burning will start from Quarter 3. Current Quarter: 1
+    - Token Burn Rate: 2% Quarterly
+    - Burning will start from Quarter 3. Current Quarter: 1
 
    ```typescript
    // Example usage of burnTokens function
@@ -134,9 +152,9 @@ The BARK Token Program is a sophisticated Solana-based smart contract designed t
    - [ ] Define the necessary instructions, state, and accounts for the BARK Token program.
    - [ ] Implement the integration logic with the existing BARK Token program.
 
-13. **Metadata Pointer**: [To be updated]
+13. **Metadata Pointer**: Update the Metadata section with the correct implementation.
 
-14. **Features to Update**: [To be updated]
+14. **Features to Update**: Include new features and improvements.
 
 15. **Controlling Tokens**: [To be updated]
 
@@ -154,7 +172,7 @@ For detailed documentation, architecture, and how the BARK Token Program works w
 ## ToDo List:
 
 1. **Configuration Module:**
-   - [ ] Create a new file (e.g., `config.js`) to act as the configuration module.
+   - [ ] Create a new file (e.g., `config.ts`) to act as the configuration module.
    - [ ] Export a configuration object containing all relevant constants and configuration parameters.
 
 2. **Function Decomposition:**
@@ -166,7 +184,9 @@ For detailed documentation, architecture, and how the BARK Token Program works w
 3. **Treasury Account / Wallet Logic:**
    - [ ] Define the Treasury Account/Wallet address in your code.
    - [ ] Create a new function (`sendToTreasury`) to handle the transfer of BARK tokens to the Treasury Account.
-   - [ ] Integrate the `sendToTreasury` function where appropriate in your main process.
+   - [
+
+ ] Integrate the `sendToTreasury` function where appropriate in your main process.
 
 4. **Documentation:**
    - [ ] Add changes, new features, and improvements.

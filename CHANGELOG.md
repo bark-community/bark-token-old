@@ -1,30 +1,30 @@
-# Changes
+# Changelog
 
-**v.1.0.0**
+All notable changes to this project will be documented in this file. The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
-This code has several improvements, error handling, and added functionalities. Some of the key changes include:
+## [1.0.2-Alpha]
 
-- updated code incorporates improvements, enhances logic, and provides better structure for the Solana token operations. 
+### Added
 
-- Improved Error Handling: Added error handling throughout the code to catch and log errors, preventing unexpected crashes.
+- Added documentation for the `harvestWithheldTokensToMint` function.
+- Added network information for Testnet and Mainnet.
 
-- Logging Transactions: Added a logTransactionDetails function to log transaction details, including the transaction signature.
+### Changed
 
-- Metadata Handling: Updated metadata handling functions for initializing, updating, and removing metadata fields.
+- Updated TypeScript integration instructions.
+- Improved fee withdrawal logic.
+- Refactored the initialization of Solana accounts.
 
-- Solana Connection: Moved the Solana connection initialization to a separate function.
+### Fixed
 
-- Fee Account Creation: Refactored fee account creation and added error handling.
+- Fixed issues with the Metadata section.
+- Resolved bugs in the fee withdrawal process.
+- Fixed typos and improved code readability.
 
-- Withdraw Fees from Mint: Added functionality to withdraw fees from the Mint BARK Account.
+## [1.0.1-Alpha]
 
-- Improved Fee Harvesting: Enhanced the harvestWithheldTokensToMint function to handle the case where the fee account is not found.
+### Added
 
-- Balance Checking: Added functions to check both the BARK token balance and the wallet balance.
-
-- Introduced functions getCurrentQuarter and calculateBurnAmount to handle the burning mechanism based on the current quarter and burning rate.
-
-- Added the burnTokens function to initiate the burning process at the end of the main process.
-
-- Called the burnTokens function at the end of the main function to burn tokens based on the configured burning mechanism.
-
+- Initial implementation of the BARK Token Program.
+- TypeScript integration with the Anchor framework.
+- Basic token functionalities such as minting, transferring with a fee, fee harvesting, and burning mechanism.

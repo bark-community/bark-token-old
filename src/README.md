@@ -16,7 +16,7 @@ The project is organized into the `src/` folder and several files to handle spec
 6. **`fees/transactionFees.ts`**: Handles fee-related operations, including fee account creation and withdrawal.
 7. **`metadata/metadata.ts`**: Manages Token Metadata operations.
 8. **`transactions/transactions.ts`**: Handles various transactions, including BARK transfers and burning.
-9. **`burn.ts`**: Manages burning functionalities.
+9. **`burning/burn.ts`**: Manages burning functionalities.
 
 ## Getting Started
 

@@ -14,7 +14,6 @@ The BARK Token Program is a sophisticated Solana-based smart contract designed t
 *Notice: This program is developed on the Devnet and tested on Solana Playground.*
 
 ## Features
-...
 
 - **Minting BARK Tokens**: Create new BARK tokens by initializing the BARK Mint Account.
 

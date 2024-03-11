@@ -2,7 +2,7 @@
 
 All notable changes to this project will be documented in this file. The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
-## [1.0.2-Alpha]
+## v1.0.2-Alpha
 
 ### Added
 
@@ -21,7 +21,7 @@ All notable changes to this project will be documented in this file. The format 
 - Resolved bugs in the fee withdrawal process.
 - Fixed typos and improved code readability.
 
-## [1.0.1-Alpha]
+## v1.0.1-Alpha
 
 ### Added
 

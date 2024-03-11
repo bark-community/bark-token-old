@@ -6,16 +6,17 @@ This repository contains the TypeScript implementation for the BARK Token on the
 
 ## File Structure
 
-The project is organized into several files to handle specific functionalities:
+The project is organized into src/ folder and several files to handle specific functionalities:
 
-1. **`config.ts`**: Contains configuration settings.
-2. **`solana.ts`**: Handles Solana-related operations.
-3. **`mint.ts`**: Manages BARK Mint Account creation and initialization.
-4. **`token.ts`**: Manages BARK token-related operations.
-5. **`fees.ts`**: Handles fee-related operations, including fee account creation and withdrawal.
-6. **`metadata.ts`**: Manages Token Metadata operations.
-7. **`transactions.ts`**: Handles various transactions, including BARK transfers and burning.
-8. **`utils.ts`**: General utility functions.
+1. **`main.ts`**: main functions and logic.
+2. **`utils/config.ts`**: Contains configuration settings.
+3. **`utils/solana.ts`**: Handles Solana-related operations.
+4. **`mint.ts`**: Manages BARK Mint Account creation and initialization.
+5. **`src/token.ts`**: Manages BARK token-related operations.
+6. **`fees/transactionFees.ts`**: Handles fee-related operations, including fee account creation and withdrawal.
+7. **`metadata/metadata.ts`**: Manages Token Metadata operations.
+8. **`transactions/transactions.ts`**: Handles various transactions, including BARK transfers and burning.
+9. **`utils/utils.ts`**: General utility functions.
 
 ## Getting Started
 

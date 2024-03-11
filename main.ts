@@ -3,6 +3,7 @@ import {
   Keypair,
   SystemProgram,
   Transaction,
+  TransactionInstruction,
   clusterApiUrl,
   sendAndConfirmTransaction,
   PublicKey,
@@ -15,15 +16,23 @@ import {
   createInitializeMintInstruction,
   createInitializeTransferFeeConfigInstruction,
   getMintLen,
+  createInitializeMetadataPointerInstruction,
   getTransferFeeAmount,
   mintTo,
   transferCheckedWithFee,
   unpackAccount,
   withdrawWithheldTokensFromAccounts,
+  getMetadataPointerState,
+  getTokenMetadata,
+  TYPE_SIZE,
+  LENGTH_SIZE,
 } from "@solana/spl-token";
 
 import {
   createInitializeInstruction,
+  createUpdateFieldInstruction,
+  createRemoveKeyInstruction,
+  pack,
   TokenMetadata,
 } from "@solana/spl-token-metadata";
 
@@ -67,15 +76,16 @@ const lamports = await connection.getMinimumBalanceForRentExemption(mintLen);
 // BARK metadata to store in the Mint Account
 const metaData: TokenMetadata = {
   updateAuthority: mintAuthority,
+  mint: mint,
   name: "BARK",
   symbol: "BARK",
-  uri: "https://raw.githubusercontent.com/bark-community/bark-token/bob/main/src/assets/bark.png",
+  uri: "https://raw.githubusercontent.com/bark-community/bark-token/main/src/assets/bark.svg",
   extensions: {
     website: "https://barkprotocol.net",
     socialMedia: {
       twitter: "https://twitter.com/bark_protocol",
-      discord: "https://discord.gg/bark-protocol-en",
-      telegram: "https://telegram.com/t.me/bark_protocol",
+      discord: "https://discord.gg/DncjRZQD",
+      telegram: "https://t.me/+EnczyzzKS_k2NmQ0",
       additionalMetadata: [
         ["description", "BARK, a digital asset on the Solana blockchain, and is driven by community contributions."],
       ],
@@ -183,7 +193,9 @@ async function initializeMintAccountAndTokenMetadata() {
 
     // Additional logic for Token Metadata
     // ... (add your Token Metadata logic here)
-  } catch (error) {
+  }
+
+ catch (error) {
     console.error("Error initializing Mint BARK Account and Token Metadata:", error.message);
     throw new Error("Failed to initialize Mint BARK Account and Token Metadata");
   }
@@ -404,7 +416,6 @@ async function checkBalance() {
   }
 }
 
-// Function to calculate burn amount based on burning rate
 function calculateBurnAmount(amount) {
   return BigInt(Math.floor(Number(amount) * config.BURN_RATE));
 }
@@ -450,7 +461,6 @@ async function main() {
     const [sourceTokenAccount, destinationTokenAccount] = await initializeSolanaAccounts();
     await transferBarkWithFee(sourceTokenAccount, destinationTokenAccount, config.MINT_AMOUNT);
     await withdrawFees(destinationTokenAccount, [sourceTokenAccount]);
-    await transferBarkWithFee(sourceTokenAccount, destinationTokenAccount, config.MINT_AMOUNT);
 
     const existingFeeAccount = "FEEUmDqQN9M4yQknTRYvwQhf2suJPMwcJWVtmuoRrYPM";
     const existingFeeAccountInfo = await connection.getAccountInfo(new PublicKey(existingFeeAccount), config.COMMITMENT_LEVEL);

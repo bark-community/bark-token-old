@@ -8,7 +8,7 @@ This repository contains the modular TypeScript implementation for the BARK Toke
 
 The project is organized into the `src/` folder and several files to handle specific functionalities:
 
-1. **`main.ts`**: Main functions and logic.
+1. **`src/main.ts`**: Main functions and logic.
 2. **`utils/config.ts`**: Contains configuration settings.
 3. **`utils/solana.ts`**: Handles Solana-related operations.
 4. **`mint.ts`**: Manages BARK Mint Account creation and initialization.

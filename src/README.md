@@ -1,83 +1,155 @@
-# BARK Token TypeScript - Draft
+# BARK Token TypeScript Implementation
 
 ## Overview
 
-This repository contains the TypeScript implementation for the BARK Token on the Solana blockchain. The codebase is organized to provide a modular and maintainable structure for different functionalities related to the BARK token.
+This repository contains the modular TypeScript implementation for the BARK Token on the Solana blockchain. The codebase is organized to provide a modular and maintainable structure for different functionalities related to the BARK token.
 
 ## File Structure
 
-The project is organized into src/ folder and several files to handle specific functionalities:
+The project is organized into the `src/` folder and several files to handle specific functionalities:
 
-1. **`main.ts`**: main functions and logic.
+1. **`main.ts`**: Main functions and logic.
 2. **`utils/config.ts`**: Contains configuration settings.
 3. **`utils/solana.ts`**: Handles Solana-related operations.
 4. **`mint.ts`**: Manages BARK Mint Account creation and initialization.
-5. **`src/token.ts`**: Manages BARK token-related operations.
+5. **`token.ts`**: Manages BARK token-related operations.
 6. **`fees/transactionFees.ts`**: Handles fee-related operations, including fee account creation and withdrawal.
 7. **`metadata/metadata.ts`**: Manages Token Metadata operations.
 8. **`transactions/transactions.ts`**: Handles various transactions, including BARK transfers and burning.
-9. **`utils/utils.ts`**: General utility functions.
+9. **`burn.ts`**: Manages burning functionalities.
 
 ## Getting Started
 
-Before executing the main process, ensure to validate and configure your settings:
+Follow these steps to set up and run the BARK Token TypeScript implementation:
 
-1. **Validate Configuration**: Check and validate the configuration settings in `config.ts`.
-2. **Install Dependencies**: Run `npm install` to install project dependencies.
-3. **Execute Main Process**: Run `npm start` or execute the `main.ts` file to initiate the BARK token processes.
+### Prerequisites
 
-## Usage
+- Node.js
+- Solana CLI
+- TypeScript
+- Anchor
+- Rust
 
-The BARK token processes include:
+### Installation
 
-- Initializing the Solana connection.
-- Creating and initializing the BARK Mint Account.
-- Managing BARK token-related operations, including transfers and burning.
-- Handling fee-related operations, such as creating fee accounts and withdrawing fees.
-- Managing Token Metadata, including initialization.
+1. **Clone the repository:**
 
-Refer to specific files and functions for detailed implementations.
+   ```bash
+   git clone https://github.com/bark-community/bark-token/src.git
+   cd bark-token && cd src
+   ```
 
-## File Details
+2. **Install dependencies:**
 
-### `config.ts`
+   ```bash
+   npm install
+   ```
 
-Contains configuration settings for the BARK token.
+3. **Build the project:**
 
-### `solana.ts`
+   ```bash
+   npm run build
+   ```
 
-Handles Solana-related operations, such as initializing the connection and creating Solana accounts with signatures.
+### Usage
 
-### `mint.ts`
+1. **Initialize Connection**: Establish a connection to the Solana blockchain.
 
-Manages the creation and initialization of the BARK Mint Account.
+2. **Check Balance**: Verify the SOL balance of the wallet.
 
-### `token.ts`
+3. **Initialize Mint Account**: Create and initialize the BARK Mint Account.
 
-Handles BARK token-related operations, including initializing Solana accounts, BARK transfers, and other token functions.
+   ```typescript
+   // Example usage of initializeMintAccount function
+   await initializeMintAccount();
+   ```
 
-### `fees.ts`
+4. **Initialize Solana Accounts**: Create source and destination token accounts for BARK tokens.
 
-Manages fee-related operations, such as creating fee accounts and withdrawing fees.
+   ```typescript
+   // Example usage of initializeSolanaAccounts function
+   const [sourceTokenAccount, destinationTokenAccount] = await initializeSolanaAccounts();
+   ```
 
-### `metadata.ts`
+5. **Transfer BARK with Fee**: Transfer BARK tokens from the source account to the destination account with an associated fee.
 
-Manages Token Metadata operations, including the initialization of metadata.
+   To initiate a BARK transfer with an associated fee, use the `transferBarkWithFee` function. This function not only transfers BARK tokens but also charges a fee based on the configured fee structure.
 
-### `transactions.ts`
+   ```typescript
+   // Example usage of transferBarkWithFee function
+   await transferBarkWithFee(sourceTokenAccount, destinationTokenAccount, config.MINT_AMOUNT);
+   ```
 
-Handles various transactions, including BARK transfers and burning.
+6. **Withdraw Fees**: Withdraw accumulated fees from the destination account.
 
-### `utils.ts`
+   To manage accumulated fees associated with token transfers, use the `withdrawFees` function. This function identifies fee accounts linked to the destination account, withdraws accumulated fees, and transfers them back to the BARK Mint Account.
 
-Contains general utility functions used throughout the project.
+   ```typescript
+   // Example usage of withdrawFees function
+   await withdrawFees(destinationTokenAccount, [sourceTokenAccount]);
+   ```
+
+7. **Transfer BARK Again**: Perform another BARK transfer.
+
+   ```typescript
+   // Example usage of transferBarkWithFee function for a second transfer
+   await transferBarkWithFee(sourceTokenAccount, destinationTokenAccount, config.MINT_AMOUNT);
+   ```
+
+8. **Harvest Fees to Mint**: Harvest accumulated fees and transfer them back to the BARK Mint Account.
+
+   ```typescript
+   // Example usage of harvestWithheldTokensToMint function
+   await harvestWithheldTokensToMint(mint, existingFeeAccount);
+   ```
+
+9. **Withdraw Fees Again**: Withdraw fees from the destination account.
+
+   ```typescript
+   // Example usage of withdrawFees function for a second withdrawal
+   await withdrawFees(destinationTokenAccount, [], true);
+   ```
+
+10. **Burning Mechanism**: Check the current quarter, and if the burning quarter is reached, calculate and burn a percentage of BARK tokens.
+
+- Token Burn Rate: 2% Quarterly
+- Burning will start from Quarter 3. Current Quarter: 1
+
+   ```typescript
+   // Example usage of burnTokens function
+   await burnTokens(burnAccounts[0].pubkey, burnAmount);
+   ```
+
+11. **Keypair Generation**: Generate Solana Keypairs for various accounts.
+
+   ```typescript
+   // Example usage of keypair generation
+   const keypair = generateKeypair();
+   ```
+
+12. **Anchor Program Integration ToDo**
+
+   - [ ] Create a new Anchor program file (e.g., `bark-token.ts`).
+   - [ ] Define the necessary instructions, state, and accounts for the BARK Token program.
+   - [ ] Implement the integration logic with the existing BARK Token program.
+
+13. **Metadata Pointer**: [To be updated]
+
+14. **Features to Update**: [To be updated]
+
+15. **Controlling Tokens**: [To be updated]
+
+### TypeScript Integration ToDo
+
+- [ ] Integrate TypeScript with Anchor program.
+- [ ] Update TypeScript functions based on Anchor program integration.
+- [ ] Implement TypeScript logic for interacting with the Anchor program.
 
 ## License
 
-This project is licensed under the [MIT License](LICENSE).
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
 ## Acknowledgments
 
-- Solana documentation and community for valuable resources.
-
-Feel free to contribute, report issues, or suggest improvements. Happy coding!
+- Solana Developers
+- Anchor Protocol Developers

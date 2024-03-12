@@ -62,13 +62,13 @@ The BARK Token Program is a sophisticated Solana-based smart contract designed t
    npm run build
    ```
 
-4. **Configure API Keys:**
+4. **Configure BARK API Keys:** (Not implemented)
 
    Create a `config` folder in the `src` directory and add an `index.ts` file to store API keys:
 
    ```typescript
    // src/config/index.ts
-   export const COINMARKETCAP_API_KEY = 'YOUR_COINMARKETCAP_API_KEY';
+   export const COINMARKETCAP_API_KEY = 'BARK_COINMARKETCAP_API_KEY';
    ```
 
 ### Usage

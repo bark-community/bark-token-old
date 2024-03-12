@@ -2,12 +2,26 @@
 
 All notable changes to this project will be documented in this file. The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
-## v1.0.2-Alpha
+## [Unreleased]
 
 ### Added
 
-- Added documentation for the `harvestWithheldTokensToMint` function.
-- Added network information for Testnet and Mainnet.
+- New feature under development.
+
+### Changed
+
+- Enhancements and changes in progress.
+
+### Fixed
+
+- Ongoing bug fixes.
+
+## [v1.0.2-Alpha]
+
+### Added
+
+- Documentation for the `harvestWithheldTokensToMint` function.
+- Network information for Testnet and Mainnet.
 
 ### Changed
 
@@ -17,11 +31,11 @@ All notable changes to this project will be documented in this file. The format 
 
 ### Fixed
 
-- Fixed issues with the Metadata section.
-- Resolved bugs in the fee withdrawal process.
-- Fixed typos and improved code readability.
+- Issues with the Metadata section.
+- Bugs in the fee withdrawal process.
+- Typos and improved code readability.
 
-## v1.0.1-Alpha
+## [v1.0.1-Alpha]
 
 ### Added
 

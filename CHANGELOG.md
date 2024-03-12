@@ -16,29 +16,28 @@ All notable changes to this project will be documented in this file. The format 
 
 - Ongoing bug fixes.
 
-## [v1.0.2-Alpha]
+## [v1.0.2-Alpha] - (Release Date: [Release Date])
 
 ### Added
 
-- Documentation for the `harvestWithheldTokensToMint` function.
-- Network information for Testnet and Mainnet.
+- **Network Compatibility**: The BARK Token Program now supports both Testnet and Mainnet. Utilize the provided addresses for seamless integration.
+- **Documentation for `harvestWithheldTokensToMint`**: Comprehensive guide on utilizing the `harvestWithheldTokensToMint` function.
 
 ### Changed
 
-- Updated TypeScript integration instructions.
-- Improved fee withdrawal logic.
-- Refactored the initialization of Solana accounts.
+- **Fee Withdrawal Optimization**: The fee withdrawal process has been enhanced for improved efficiency and reliability.
+- **Refactored Solana Account Initialization**: The process of initializing Solana accounts has been refactored for enhanced clarity and maintainability.
 
 ### Fixed
 
-- Issues with the Metadata section.
-- Bugs in the fee withdrawal process.
-- Typos and improved code readability.
+- **Resolved Bugs in Fee Withdrawal**: Addressed bugs related to fee withdrawal, ensuring a smoother operation.
+- **Metadata Section Improvements**: Updated the metadata section to resolve issues and enhance overall functionality.
+- **Code Readability Enhancements**: Corrected typos and refined the code for improved readability.
 
-## [v1.0.1-Alpha]
+## [v1.0.1-Alpha] - (Release Date: [Release Date])
 
 ### Added
 
-- Initial implementation of the BARK Token Program.
-- TypeScript integration with the Anchor framework.
-- Basic token functionalities such as minting, transferring with a fee, fee harvesting, and burning mechanism.
+- **Initial Implementation**: Introduced the BARK Token Program.
+- **TypeScript Integration with Anchor Framework**: Integrated TypeScript for improved type safety and clarity.
+- **Basic Token Functionalities**: Implemented basic token functionalities, including minting, transferring with a fee, fee harvesting, and burning mechanism.

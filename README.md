@@ -27,7 +27,9 @@ The BARK Token Program is a sophisticated Solana-based smart contract designed t
 
 - **Keypair Generation**: Generate Solana Keypairs for various accounts if not implemented or created.
 
-- **CoinMarketCap API Integration**: Retrieve real-time market data for the BARK token using the CoinMarketCap API.
+## Implement:
+
+- **CoinMarketCap API Integration**: Retrieve real-time market data for the BARK token using the Coincecho or CoinMarketCap API.
 
 ## Getting Started
 

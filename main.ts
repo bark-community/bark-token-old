@@ -85,6 +85,7 @@ const decimals = Math.max(0, Math.floor(Math.log10(Number(totalSupply) || 1)) - 
 // BARK metadata to store in the Mint Account
 const metaData: TokenMetadata = {
   updateAuthority: mintAuthority,
+  mint: mint,
   name: "BARK",
   symbol: "BARK",
   uri: "https://raw.githubusercontent.com/bark-community/bark-token/main/src/assets/bark.svg",

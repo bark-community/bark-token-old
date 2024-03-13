@@ -22,10 +22,6 @@ import {
   transferCheckedWithFee,
   unpackAccount,
   withdrawWithheldTokensFromAccounts,
-  getMetadataPointerState,
-  getTokenMetadata,
-  TYPE_SIZE,
-  LENGTH_SIZE,
 } from "@solana/spl-token";
 
 import {
@@ -47,8 +43,8 @@ const config = {
   COMMITMENT_LEVEL: "confirmed",
   clusterUrl: clusterApiUrl("devnet"),
   TOKEN_2022_PROGRAM_ID: new PublicKey("TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb"),
-  BARK_ACCOUNT: new PublicKey('BARKhLzdWbyZiP3LNoD9boy7MrAy4CVXEToDyYGeEBKF'), 
-  FREEZE_AUTHORITY: new PublicKey('BARKhLzdWbyZiP3LNoD9boy7MrAy4CVXEToDyYGeEBKF'), 
+  BARK_ACCOUNT: new PublicKey('BARKhLzdWbyZiP3LNoD9boy7MrAy4CVXEToDyYGeEBKF'),
+  FREEZE_AUTHORITY: new PublicKey('BARKhLzdWbyZiP3LNoD9boy7MrAy4CVXEToDyYGeEBKF'),
   BURN_WALLET_ADDRESS: "BURNF5qPfU1A9wSYCB4x4VUwQd398VHqwMHCCsDhp134",
   LAMPORTS_PER_SOL: 1000000000,
   BURN_START_QUARTER: 3,
@@ -195,9 +191,7 @@ async function initializeMintAccountAndTokenMetadata() {
 
     // Additional logic for Token Metadata
     // ... (add your Token Metadata logic here)
-  }
-
- catch (error) {
+  } catch (error) {
     console.error("Error initializing Mint BARK Account and Token Metadata:", error.message);
     throw new Error("Failed to initialize Mint BARK Account and Token Metadata");
   }

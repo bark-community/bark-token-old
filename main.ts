@@ -1,3 +1,19 @@
+/**
+ * Solana 2022 Token Script
+ *
+ * Description: This script provides functions for creating, initializing, and managing a Solana token.
+ * It includes features such as minting, transferring with fees, withdrawing fees, burning BARK tokens, and more.
+ *
+ * Author: BARK Protocol
+ * Date: March 13, 2024
+ * Version: 1.0.3-Alpha
+ *
+ * Libraries:
+ * - @solana/web3.js: Solana Web3 library for interacting with the Solana blockchain.
+ * - @solana/spl-token: Solana SPL Token library for BARK token-related operations.
+ * - @solana/spl-token-metadata: Solana SPL Token Metadata library for managing BARK token metadata.
+ */
+
 import {
   Connection,
   Keypair,
@@ -66,10 +82,23 @@ const mintKeypair = Keypair.generate();
 const mint = mintKeypair.publicKey;
 
 // BARK Mint Authority and Transfer Fee Config Authority
-const mintAuthority = pg?.wallet?.publicKey; // Ensure that `pg` is defined
+const mintAuthority = pg?.wallet?.publicKey; // Ensure that `pg` and `wallet` are defined
 const transferFeeConfigAuthority = pg?.wallet?.keypair;
 const withdrawWithheldAuthority = pg?.wallet?.keypair;
 const burnAuthority = pg?.wallet?.keypair;
+const updateAuthority = pg?.wallet?.publicKey;
+
+console.log("pg:", pg);
+console.log("wallet:", pg?.wallet);
+console.log("mintAuthority:", mintAuthority);
+console.log("transferFeeConfigAuthority:", transferFeeConfigAuthority);
+console.log("withdrawWithheldAuthority:", withdrawWithheldAuthority);
+console.log("burnAuthority:", burnAuthority);
+console.log("updateAuthority:", updateAuthority);
+
+if (!updateAuthority) {
+  throw new Error("Update authority is undefined.");
+}
 
 // Ensure FEE_ACCOUNT_SPACE is defined
 const FEE_ACCOUNT_SPACE = getMintLen([ExtensionType.TransferFeeConfig]);
@@ -105,6 +134,22 @@ const metaData: TokenMetadata = {
   },
 };
 
+// Log debug information
+console.log("metaData:", metaData);
+console.log("updateAuthority:", mintAuthority);
+
+// Initialize BARK Metadata Account data
+const initializeMetadataInstruction = createInitializeInstruction({
+  programId: TOKEN_2022_PROGRAM_ID, // SPL Token Extension Program as Metadata Program
+  metadata: mint, // Account address that holds the BARK metadata
+  updateAuthority: updateAuthority, // Ensure that `updateAuthority` is defined
+  mint: mint, // Mint Account address
+  mintAuthority: mintAuthority, // Designated Mint Authority
+  name: metaData.name,
+  symbol: metaData.symbol,
+  uri: metaData.uri,
+});
+
 // Function to initialize the Solana connection
 async function initializeConnection() {
   try {
@@ -137,7 +182,7 @@ async function createFeeAccount(payer) {
     return newFeeAccount;
   } catch (error) {
     console.error("Error creating fee account:", error.message);
-    throw new Error("Failed to create fee account");
+    throw new Error(`Failed to create fee account: ${error.message}`);
   }
 }
 
@@ -389,7 +434,7 @@ async function harvestWithheldTokensToMint(mintAccount, feeAccount) {
     }
   } catch (error) {
     console.error(`Error harvesting and transferring withheld fees to Mint BARK: ${error.message}`);
-    throw new Error("Failed to harvest and transfer withheld fees to Mint BARK");
+    throw new Error(`Failed to harvest and transfer withheld fees to Mint BARK: ${error.message}`);
   }
 }
 

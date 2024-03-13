@@ -7,6 +7,8 @@ All notable changes to this project will be documented in this file. The format 
 ### Added
 
 - New feature under development.
+- Integrated `filterAccountsToWithdraw` function to handle account filtering during fee withdrawal.
+- Modified the `withdrawFees` function to use the new filtering logic.
 
 ### Changed
 

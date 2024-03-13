@@ -37,7 +37,7 @@ const config = {
   FEE_BASIS_POINTS: 600,
   MAX_FEE: BigInt(800),
   MINT_AMOUNT: 20_000_000_000_000n,
-  MAX_SUPPLY: 20_000_000_000_000n,
+  MAX_SUPPLY: BigInt("20000000000000"),
   TRANSFER_AMOUNT: BigInt(10_000),
   DECIMALS: 3,
   COMMITMENT_LEVEL: "confirmed",
@@ -56,7 +56,7 @@ const config = {
 const connection = new Connection(config.clusterUrl, config.COMMITMENT_LEVEL);
 
 // BARK wallet
-const payerWallet = pg?.wallet?.keypair; // Ensure that `pg` is defined
+const payerWallet = pg?.wallet?.keypair;
 
 // Generate a new keypair for the Mint BARK Account
 const mintKeypair = Keypair.generate();
@@ -68,9 +68,19 @@ const transferFeeConfigAuthority = pg?.wallet?.keypair;
 const withdrawWithheldAuthority = pg?.wallet?.keypair;
 const burnAuthority = pg?.wallet?.keypair;
 
+// Ensure FEE_ACCOUNT_SPACE is defined
+const FEE_ACCOUNT_SPACE = getMintLen([ExtensionType.TransferFeeConfig]);
+
+// Get the minimum balance for rent exemption for the fee account
+const FEE_ACCOUNT_LAMPORTS = await connection.getMinimumBalanceForRentExemption(FEE_ACCOUNT_SPACE);
+
 // Calculate minimum balance for rent exemption
 const mintLen = getMintLen([ExtensionType.TransferFeeConfig]);
 const lamports = await connection.getMinimumBalanceForRentExemption(mintLen);
+
+// Define the decimals and the mint amount calculation
+const totalSupply = BigInt("20000000000") * BigInt(10 ** 9);
+const decimals = Math.max(0, Math.floor(Math.log10(Number(totalSupply) || 1)) - 8);
 
 // BARK metadata to store in the Mint Account
 const metaData: TokenMetadata = {
@@ -94,7 +104,7 @@ const metaData: TokenMetadata = {
 // Function to initialize the Solana connection
 async function initializeConnection() {
   try {
-    return new Connection(CONFIG.clusterUrl, CONFIG.COMMITMENT_LEVEL);
+    return new Connection(config.clusterUrl, config.COMMITMENT_LEVEL);
   } catch (error) {
     console.error("Error initializing Solana connection:", error.message);
     throw new Error("Failed to initialize Solana connection");
@@ -107,14 +117,12 @@ async function createFeeAccount(payer) {
     const newFeeAccountKeypair = Keypair.generate();
     const newFeeAccount = newFeeAccountKeypair.publicKey;
 
-    const feeAccountSpace = await connection.getMinimumBalanceForRentExemption(mintLen);
-
     const createFeeAccountInstruction = SystemProgram.createAccount({
       fromPubkey: payer.publicKey,
       newAccountPubkey: newFeeAccount,
-      space: mintLen,
-      lamports: lamports,
-      programId: config.TOKEN_2022_PROGRAM_ID,
+      space: FEE_ACCOUNT_SPACE,
+      lamports: FEE_ACCOUNT_LAMPORTS,
+      programId: TOKEN_2022_PROGRAM_ID,
     });
 
     const createFeeAccountTransaction = new Transaction().add(createFeeAccountInstruction);
@@ -186,14 +194,20 @@ async function initializeMintAccount() {
 // Function to initialize the Mint BARK Account and Token Metadata
 async function initializeMintAccountAndTokenMetadata() {
   try {
-    // Initialize Mint BARK Account
+    // Step 1: Initialize Mint BARK Account
     await initializeMintAccount();
 
-    // Additional logic for Token Metadata
-    // ... (add your Token Metadata logic here)
+    // Step 2: Add Token Metadata logic here
+    // For example:
+    // - Create a new token metadata account
+    // - Set metadata for the Mint BARK Account
+    // - Configure additional metadata properties
+
+    // Note: Customize this section based on token metadata requirements
+
   } catch (error) {
-    console.error("Error initializing Mint BARK Account and Token Metadata:", error.message);
-    throw new Error("Failed to initialize Mint BARK Account and Token Metadata");
+    console.error("Error initializing Mint Account and BARK Token Metadata:", error.message);
+    throw new Error("Failed to initialize Mint Account and BARK Token Metadata");
   }
 }
 
@@ -208,7 +222,7 @@ async function initializeSolanaAccounts() {
       sourceOwnerKeypair.publicKey,
       undefined,
       undefined,
-      config.TOKEN_2022_PROGRAM_ID,
+      TOKEN_2022_PROGRAM_ID,
     );
 
     const destinationOwnerKeypair = Keypair.generate();
@@ -219,7 +233,7 @@ async function initializeSolanaAccounts() {
       destinationOwnerKeypair.publicKey,
       undefined,
       undefined,
-      config.TOKEN_2022_PROGRAM_ID,
+      TOKEN_2022_PROGRAM_ID,
     );
 
     return [sourceTokenAccount, destinationTokenAccount];
@@ -286,34 +300,33 @@ async function transferBarkWithFee(sourceTokenAccount, destinationTokenAccount, 
   }
 }
 
+// Function to filter accounts to withdraw
+async function filterAccountsToWithdraw(destinationTokenAccount, accountsToWithdrawFrom, programId) {
+  try {
+    const filteredAccounts = accountsToWithdrawFrom.filter(async (account) => {
+      const accountInfo = await connection.getAccountInfo(account, config.COMMITMENT_LEVEL);
+      // Add your custom logic to filter the accounts based on your requirements
+      return accountInfo && accountInfo.owner.equals(programId);
+    });
+
+    return filteredAccounts;
+  } catch (error) {
+    console.error("Error filtering accounts to withdraw:", error.message);
+    throw new Error("Failed to filter accounts to withdraw");
+  }
+}
+
 // Function to handle fee withdrawal
 async function withdrawFees(destinationTokenAccount, accountsToWithdrawFrom, isMint = false) {
   try {
-    const allAccounts = await connection.getProgramAccounts(config.TOKEN_2022_PROGRAM_ID, {
-      commitment: config.COMMITMENT_LEVEL,
-      filters: [
-        {
-          memcmp: {
-            offset: 0,
-            bytes: mint.toString(),
-          },
-        },
-      ],
-    });
-
-    const filteredAccounts = allAccounts
-      .filter(accountInfo => {
-        const account = unpackAccount(accountInfo.pubkey, accountInfo.account, config.TOKEN_2022_PROGRAM_ID);
-        const transferFeeAmount = getTransferFeeAmount(account);
-        return (
-          transferFeeAmount !== null &&
-          transferFeeAmount.withheldAmount > 0 &&
-          accountsToWithdrawFrom.includes(accountInfo.pubkey)
-        );
-      });
+    const filteredAccounts = await filterAccountsToWithdraw(
+      destinationTokenAccount,
+      accountsToWithdrawFrom,
+      TOKEN_2022_PROGRAM_ID
+    );
 
     if (filteredAccounts.length > 0) {
-      console.log("Accounts selected for withdrawal:", filteredAccounts.map(account => account.pubkey.toString()));
+      console.log("Accounts selected for withdrawal:", filteredAccounts.map(account => account.toString()));
 
       const withdrawSignature = await withdrawWithheldTokensFromAccounts(
         connection,
@@ -322,9 +335,9 @@ async function withdrawFees(destinationTokenAccount, accountsToWithdrawFrom, isM
         destinationTokenAccount,
         withdrawWithheldAuthority,
         undefined,
-        filteredAccounts.map(accountInfo => accountInfo.pubkey),
+        filteredAccounts,
         undefined,
-        config.TOKEN_2022_PROGRAM_ID,
+        TOKEN_2022_PROGRAM_ID,
       );
       logTransactionDetails(`Withdraw Fee${isMint ? ' from Mint' : ''}`, withdrawSignature);
     } else {
@@ -458,6 +471,9 @@ async function main() {
     await transferBarkWithFee(sourceTokenAccount, destinationTokenAccount, config.MINT_AMOUNT);
     await withdrawFees(destinationTokenAccount, [sourceTokenAccount]);
 
+    // Ensure FEE_ACCOUNT_SPACE is defined
+    const FEE_ACCOUNT_SPACE = getMintLen([ExtensionType.TransferFeeConfig]);
+
     const existingFeeAccount = "FEEUmDqQN9M4yQknTRYvwQhf2suJPMwcJWVtmuoRrYPM";
     const existingFeeAccountInfo = await connection.getAccountInfo(new PublicKey(existingFeeAccount), config.COMMITMENT_LEVEL);
 
@@ -503,7 +519,14 @@ async function main() {
     }
   } catch (error) {
     console.error("Main process error:", error.message);
-    throw new Error("Failed to execute main process");
+    throw new MainProcessError("Failed to execute main process");
+  }
+}
+
+class MainProcessError extends Error {
+  constructor(message) {
+    super(message);
+    this.name = "MainProcessError";
   }
 }
 

@@ -3,7 +3,6 @@ import {
   Keypair,
   SystemProgram,
   Transaction,
-  TransactionInstruction,
   clusterApiUrl,
   sendAndConfirmTransaction,
   PublicKey,
@@ -15,13 +14,17 @@ import {
   createAccount,
   createInitializeMintInstruction,
   createInitializeTransferFeeConfigInstruction,
-  getMintLen,
   createInitializeMetadataPointerInstruction,
+  getMintLen,
   getTransferFeeAmount,
   mintTo,
   transferCheckedWithFee,
   unpackAccount,
   withdrawWithheldTokensFromAccounts,
+  getMetadataPointerState,
+  getTokenMetadata,
+  TYPE_SIZE,
+  LENGTH_SIZE,
 } from "@solana/spl-token";
 
 import {

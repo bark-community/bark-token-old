@@ -6,7 +6,7 @@
  *
  * Author: BARK Protocol
  * Date: March 13, 2024
- * Version: 1.0.3-Alpha
+ * Version: 1.0.4
  *
  * Libraries:
  * - @solana/web3.js: Solana Web3 library for interacting with the Solana blockchain.
@@ -53,9 +53,9 @@ import {
 
 // Constants and Configuration
 const config = {
-  FEE_BASIS_POINTS: 600,
-  MAX_FEE: BigInt(800),
-  MINT_AMOUNT: 20_000_000_000_000n,
+  FEE_BASIS_POINTS: 500, // 5%
+  MAX_FEE: BigInt(800), // 8%
+  MINT_AMOUNT: 20_000_000_000_000n, // 20 Billion tokens
   MAX_SUPPLY: BigInt("20000000000000"),
   TRANSFER_AMOUNT: BigInt(10_000),
   DECIMALS: 3,
@@ -150,13 +150,23 @@ const initializeMetadataInstruction = createInitializeInstruction({
   uri: metaData.uri,
 });
 
+// Helper function for error handling
+function handleError(error, errorMessage) {
+  console.error(errorMessage, error);
+  throw new Error(errorMessage);
+}
+
+// Helper function to log transaction details
+function logTransactionDetails(message, signature) {
+  console.log(`\n${message}: https://solana.fm/tx/${signature}?cluster=devnet`);
+}
+
 // Function to initialize the Solana connection
 async function initializeConnection() {
   try {
     return new Connection(config.clusterUrl, config.COMMITMENT_LEVEL);
   } catch (error) {
-    console.error("Error initializing Solana connection:", error.message);
-    throw new Error("Failed to initialize Solana connection");
+    handleError(error, "Error initializing Solana connection");
   }
 }
 
@@ -181,14 +191,8 @@ async function createFeeAccount(payer) {
     console.log(`New fee account created: ${newFeeAccount.toBase58()}`);
     return newFeeAccount;
   } catch (error) {
-    console.error("Error creating fee account:", error.message);
-    throw new Error(`Failed to create fee account: ${error.message}`);
+    handleError(error, "Error creating fee account");
   }
-}
-
-// Helper function to log transaction details
-function logTransactionDetails(message, signature) {
-  console.log(`\n${message}: https://solana.fm/tx/${signature}?cluster=devnet`);
 }
 
 // Function to create a Solana account with signature
@@ -198,12 +202,11 @@ async function createSolanaAccountWithSignature(instruction, signers = []) {
     logTransactionDetails("Transaction Signature", signature);
     return signature;
   } catch (error) {
-    console.error("Error creating Solana account:", error.message);
-    throw new Error("Failed to create Solana account");
+    handleError(error, "Error initializing Mint BARK Account");
   }
 }
 
-// Function to initialize the Mint Bark Account
+// Function to initialize the Mint BARK Account
 async function initializeMintAccount() {
   try {
     const transaction = new Transaction()
@@ -344,8 +347,7 @@ async function transferBarkWithFee(sourceTokenAccount, destinationTokenAccount, 
     );
     logTransactionDetails("Transfer BARK", transferSignature);
   } catch (error) {
-    console.error("Error transferring BARK with fee:", error.message);
-    throw new Error("Failed to transfer BARK with fee");
+    handleError(error, "Error transferring BARK with fee");
   }
 }
 
@@ -487,7 +489,7 @@ function getCurrentQuarter() {
   return quarters;
 }
 
-/// Function to burn tokens
+// Function to burn BARK tokens
 async function burnTokens(tokenAccount, burnAmount) {
   try {
     const burnSignature = await transferCheckedWithFee(

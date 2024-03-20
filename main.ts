@@ -5,8 +5,8 @@
  * It includes features such as minting, transferring with fees, withdrawing fees, burning BARK tokens, and more.
  *
  * Author: BARK Protocol
- * Date: March 13, 2024
- * Version: 1.0.3-Alpha
+ * Date: March 20, 2024
+ * Version: 1.0.4-Alpha
  *
  * Libraries:
  * - @solana/web3.js: Solana Web3 library for interacting with the Solana blockchain.
@@ -41,6 +41,7 @@ import {
   getTokenMetadata,
   TYPE_SIZE,
   LENGTH_SIZE,
+  transferChecked,
 } from "@solana/spl-token";
 
 import {
@@ -51,27 +52,25 @@ import {
   TokenMetadata,
 } from "@solana/spl-token-metadata";
 
-// Constants and Configuration
+// Define and initialize configuration parameters
 const config = {
+  COMMITMENT_LEVEL: "confirmed",
+  clusterUrl: clusterApiUrl("devnet"),
   FEE_BASIS_POINTS: 500, // 5%
   MAX_FEE: BigInt(800), // 8%
   MINT_AMOUNT: 20_000_000_000_000n, // 20 Billion tokens
+  DECIMALS: 3,
   MAX_SUPPLY: BigInt("20000000000000"),
   TRANSFER_AMOUNT: BigInt(10_000),
-  DECIMALS: 3,
-  COMMITMENT_LEVEL: "confirmed",
+  LAMPORTS_PER_SOL: 1000000000,
   BURN_START_QUARTER: 3,
   BURN_START_YEAR: 2024,
   BURN_RATE: 0.025,
+  TOKEN_2022_PROGRAM_ID: new PublicKey("TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb"),
+  BARK_ACCOUNT: new PublicKey('BARKhLzdWbyZiP3LNoD9boy7MrAy4CVXEToDyYGeEBKF'),
+  FREEZE_AUTHORITY: new PublicKey('BARKhLzdWbyZiP3LNoD9boy7MrAy4CVXEToDyYGeEBKF'),
+  BURN_WALLET_ADDRESS: "BURNF5qPfU1A9wSYCB4x4VUwQd398VHqwMHCCsDhp134",
 };
-
-// Update other properties of the config object as needed
-config.clusterUrl = clusterApiUrl("devnet");
-config.TOKEN_2022_PROGRAM_ID = new PublicKey("TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb");
-config.BARK_ACCOUNT = new PublicKey('BARKhLzdWbyZiP3LNoD9boy7MrAy4CVXEToDyYGeEBKF');
-config.FREEZE_AUTHORITY = new PublicKey('BARKhLzdWbyZiP3LNoD9boy7MrAy4CVXEToDyYGeEBKF');
-config.BURN_WALLET_ADDRESS = "BURNF5qPfU1A9wSYCB4x4VUwQd398VHqwMHCCsDhp134";
-config.LAMPORTS_PER_SOL = 1000000000;
 
 // Connection to devnet cluster
 const connection = new Connection(config.clusterUrl, config.COMMITMENT_LEVEL);
@@ -101,15 +100,6 @@ const transferFeeConfigAuthority = pg?.wallet?.keypair;
 const withdrawWithheldAuthority = pg?.wallet?.keypair;
 const burnAuthority = pg?.wallet?.keypair;
 const updateAuthority = pg?.wallet?.publicKey;
-
-console.log("pg:", pg);
-console.log("wallet:", pg?.wallet);
-console.log("mintAuthority:", mintAuthority);
-console.log("transferFeeConfigAuthority:", transferFeeConfigAuthority);
-console.log("withdrawWithheldAuthority:", withdrawWithheldAuthority);
-console.log("burnAuthority:", burnAuthority);
-console.log("updateAuthority:", updateAuthority);
-
 if (!updateAuthority) {
   throw new Error("Update authority is undefined.");
 }
@@ -146,6 +136,16 @@ const decimals = Math.max(0, Math.floor(Math.log10(Number(totalSupply) || 1)) - 
 // Define the mint amount based on max supply and decimals
 const mintAmount = totalSupply / BigInt(10 ** decimals);
 
+// Log debug information
+console.log("pg:", pg);
+console.log("wallet:", pg?.wallet);
+console.log("mintAuthority:", mintAuthority);
+console.log("transferFeeConfigAuthority:", transferFeeConfigAuthority);
+console.log("withdrawWithheldAuthority:", withdrawWithheldAuthority);
+console.log("burnAuthority:", burnAuthority);
+console.log("metaData:", metaData);
+console.log("updateAuthority:", updateAuthority);
+
 // BARK metadata to store in the Mint Account
 const metaData: TokenMetadata = {
   updateAuthority: mintAuthority,
@@ -165,10 +165,6 @@ const metaData: TokenMetadata = {
     },
   },
 };
-
-// Log debug information
-console.log("metaData:", metaData);
-console.log("updateAuthority:", mintAuthority);
 
 // Initialize BARK Metadata Account data
 const initializeMetadataInstruction = await createInitializeInstruction({
@@ -499,31 +495,6 @@ async function harvestWithheldTokensToMint(mintAccount, feeAccount) {
   }
 }
 
-// Function to check the BARK account balance of the wallet
-async function checkBarkBalance() {
-  try {
-    const ownerPublicKey = payerWallet.publicKey;
-    const tokenAccounts = await connection.getParsedTokenAccountsByOwner(ownerPublicKey, {
-      programId: config.TOKEN_2022_PROGRAM_ID,
-      commitment: config.COMMITMENT_LEVEL,
-    });
-
-    const barkAccounts = tokenAccounts.value.filter(account => account.account.data.parsed.info.mint.equals(mint));
-
-    if (barkAccounts.length > 0) {
-      barkAccounts.forEach(account => {
-        const balance = account.account.data.parsed.info.tokenAmount.uiAmountString;
-        console.log(`BARK account balance: ${balance} BARK`);
-      });
-    } else {
-      console.log("No BARK accounts found for the wallet.");
-    }
-  } catch (error) {
-    console.error("Error checking BARK token balance:", error.message);
-    throw new Error("Failed to check BARK token balance");
-  }
-}
-
 // Function to check the balance of the wallet
 async function checkBalance() {
   try {
@@ -598,53 +569,23 @@ async function main() {
       const newFeeAccount = await createFeeAccount(payerWallet);
       console.log(`Using the newly created fee account: ${newFeeAccount.toBase58()}`);
     } else {
-      console.log(`Using existing fee account: ${existingFeeAccount}`);
+      console.log(`Using the existing fee account: ${existingFeeAccount}`);
     }
 
-    await harvestWithheldTokensToMint(mint, existingFeeAccount);
-    await withdrawFees(destinationTokenAccount, [], true);
-
-    const burnQuarter = config.BURN_START_QUARTER; // Set the quarter when burning starts
     const currentQuarter = getCurrentQuarter();
-
-    if (currentQuarter >= burnQuarter) {
-      const accounts = await connection.getParsedTokenAccountsByOwner(burnAuthority.publicKey, {
-        programId: config.TOKEN_2022_PROGRAM_ID,
-        commitment: config.COMMITMENT_LEVEL,
-      });
-
-      const burnAccounts = accounts.value.filter(account => account.account.data.parsed.info.mint.equals(mint));
-
-      if (burnAccounts.length > 0) {
-        const totalBurnAmount = burnAccounts.reduce((total, account) => {
-          return total + Number(account.account.data.parsed.info.tokenAmount.uiAmountString);
-        }, 0);
-
-        const burnAmount = calculateBurnAmount(totalBurnAmount);
-
-        if (burnAmount > 0) {
-          await burnTokens(burnAccounts[0].pubkey, burnAmount);
-        } else {
-          console.log("No BARK tokens to burn in this quarter.");
-        }
-      } else {
-        console.log("No burn accounts found.");
-      }
+    if (currentQuarter >= config.BURN_START_QUARTER) {
+      console.log("Quarter >= BURN_START_QUARTER. Burning tokens...");
+      const burnAmount = calculateBurnAmount(config.MINT_AMOUNT);
+      console.log("Burn amount:", burnAmount);
+      await burnTokens(destinationTokenAccount, burnAmount);
     } else {
-      console.log(`Burning will start from Quarter ${burnQuarter}. Current Quarter: ${currentQuarter}`);
+      console.log("Quarter < BURN_START_QUARTER. Skipping token burn.");
     }
   } catch (error) {
-    console.error("Main process error:", error.message);
-    throw new MainProcessError("Failed to execute main process");
+    console.error("Error in main process:", error.message);
+    throw new Error("Main process failed");
   }
 }
 
-class MainProcessError extends Error {
-  constructor(message) {
-    super(message);
-    this.name = "MainProcessError";
-  }
-}
-
-// Execute the main process
-await main();
+// Run the main function
+main();

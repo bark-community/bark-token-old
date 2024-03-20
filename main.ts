@@ -78,19 +78,19 @@ const connection = new Connection(config.clusterUrl, config.COMMITMENT_LEVEL);
 // BARK wallet
 let payerWallet;
 if (pg && pg.wallet && pg.wallet.keypair) {
-    payerWallet = pg.wallet.keypair;
+  payerWallet = pg.wallet.keypair;
 } else {
-    console.error("Error: Unable to access payer wallet keypair.");
-    throw new Error("Unable to access payer wallet keypair.");
+  console.error("Error: Unable to access payer wallet keypair.");
+  throw new Error("Unable to access payer wallet keypair.");
 }
 
 // Generate a new keypair for the Mint BARK Account
 let mintKeypair;
 try {
-    mintKeypair = Keypair.generate();
+  mintKeypair = Keypair.generate();
 } catch (error) {
-    console.error("Error generating keypair for the Mint BARK Account:", error.message);
-    throw new Error("Failed to generate keypair for the Mint BARK Account");
+  console.error("Error generating keypair for the Mint BARK Account:", error.message);
+  throw new Error("Failed to generate keypair for the Mint BARK Account");
 }
 const mint = mintKeypair.publicKey;
 
@@ -104,7 +104,22 @@ if (!updateAuthority) {
   throw new Error("Update authority is undefined.");
 }
 
-// Ensure FEE_ACCOUNT_SPACE is defined
+// Define the total supply and calculate decimals
+const totalSupply = BigInt("20000000000") * BigInt(10 ** 9);
+const decimals = 3; // Assuming 9 decimal places based on the provided calculation
+
+// Calculate the scale factor for the decimals
+const scaleFactor = BigInt(10 ** decimals);
+
+// Define the mint amount based on max supply and decimals
+const mintAmount = totalSupply * scaleFactor;
+
+/**
+ * Function to initialize fee account space
+ * @param {Connection} connection - The connection to the Solana cluster
+ * @returns {Promise<{FEE_ACCOUNT_SPACE: number, FEE_ACCOUNT_LAMPORTS: number}>} - The fee account space and lamports
+ * @throws Will throw an error if failed to initialize fee account space
+ */
 async function initializeFeeAccountSpace(connection) {
   try {
     // Ensure FEE_ACCOUNT_SPACE is defined
@@ -125,16 +140,10 @@ const { FEE_ACCOUNT_SPACE, FEE_ACCOUNT_LAMPORTS } = await initializeFeeAccountSp
 console.log("FEE_ACCOUNT_SPACE:", FEE_ACCOUNT_SPACE);
 console.log("FEE_ACCOUNT_LAMPORTS:", FEE_ACCOUNT_LAMPORTS);
 
+
 // Calculate minimum balance for rent exemption
 const mintLen = getMintLen([ExtensionType.TransferFeeConfig]);
 const lamports = await connection.getMinimumBalanceForRentExemption(mintLen);
-
-// Define the total supply and calculate decimals
-const totalSupply = BigInt("20000000000") * BigInt(10 ** 9);
-const decimals = Math.max(0, Math.floor(Math.log10(Number(totalSupply) || 1)) - 8);
-
-// Define the mint amount based on max supply and decimals
-const mintAmount = totalSupply / BigInt(10 ** decimals);
 
 // Log debug information
 console.log("pg:", pg);
@@ -146,8 +155,8 @@ console.log("burnAuthority:", burnAuthority);
 console.log("metaData:", metaData);
 console.log("updateAuthority:", updateAuthority);
 
-// BARK metadata to store in the Mint Account
-const metaData: TokenMetadata = {
+// Define BARK metadata to store in the Mint Account
+const metaData = {
   updateAuthority: mintAuthority,
   mint: mint,
   name: "BARK",
@@ -160,7 +169,7 @@ const metaData: TokenMetadata = {
       discord: "https://discord.gg/DncjRZQD",
       telegram: "https://t.me/+EnczyzzKS_k2NmQ0",
       additionalMetadata: [
-        ["description", "BARK, a digital asset on the Solana blockchain, and is driven by community contributions."],
+        ["description", "BARK, a digital asset on the Solana blockchain, driven by community contributions."],
       ],
     },
   },
@@ -177,6 +186,7 @@ const initializeMetadataInstruction = await createInitializeInstruction({
     name: metaData.name,
     symbol: metaData.symbol,
     uri: metaData.uri,
+    ...metaData.extensions, // Spread additional metadata extensions
   },
 });
 
@@ -479,7 +489,7 @@ async function harvestWithheldTokensToMint(mintAccount, feeAccount) {
         mintAccount,
         mintAuthority,
         withheldAmount,
-        3,
+        9,
         0,
         undefined,
         undefined,
@@ -555,29 +565,21 @@ async function main() {
     await transferBarkWithFee(sourceTokenAccount, destinationTokenAccount, config.MINT_AMOUNT);
     await withdrawFees(destinationTokenAccount, [sourceTokenAccount]);
 
-    // Ensure FEE_ACCOUNT_SPACE is defined
-    const FEE_ACCOUNT_SPACE = getMintLen([ExtensionType.TransferFeeConfig]);
-
-    // Log FEE_ACCOUNT_SPACE to console
-    console.log("FEE_ACCOUNT_SPACE:", FEE_ACCOUNT_SPACE);
-
-    const existingFeeAccount = "FEEUmDqQN9M4yQknTRYvwQhf2suJPMwcJWVtmuoRrYPM";
-    const existingFeeAccountInfo = await connection.getAccountInfo(new PublicKey(existingFeeAccount), config.COMMITMENT_LEVEL);
-
-    if (!existingFeeAccountInfo) {
-      console.log(`Fee account ${existingFeeAccount} not found or implemented. Creating a new fee account...`);
-      const newFeeAccount = await createFeeAccount(payerWallet);
-      console.log(`Using the newly created fee account: ${newFeeAccount.toBase58()}`);
-    } else {
-      console.log(`Using the existing fee account: ${existingFeeAccount}`);
-    }
-
+    // Check if the current quarter is greater than or equal to the burn start quarter
     const currentQuarter = getCurrentQuarter();
     if (currentQuarter >= config.BURN_START_QUARTER) {
       console.log("Quarter >= BURN_START_QUARTER. Burning tokens...");
+      
+      // Calculate the burn amount based on the configured burn rate
       const burnAmount = calculateBurnAmount(config.MINT_AMOUNT);
       console.log("Burn amount:", burnAmount);
-      await burnTokens(destinationTokenAccount, burnAmount);
+
+      // Burn tokens only if the calculated burn amount is positive
+      if (burnAmount > 0n) {
+        await burnTokens(destinationTokenAccount, burnAmount);
+      } else {
+        console.log("No tokens to burn.");
+      }
     } else {
       console.log("Quarter < BURN_START_QUARTER. Skipping token burn.");
     }

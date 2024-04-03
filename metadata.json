@@ -1,6 +1,45 @@
 {
     "name": "BARK",
     "symbol": "BARK",
-    "description": "BARK, a digital asset on the Solana blockchain, driven by community contributions.",
-    "image": "https://raw.githubusercontent.com/bark-community/bark-token/main/src/assets/bark.svg"
-}
+    "description": "BARK, a real-world asset token (RWA) on the Solana blockchain, driven by community contributions. It aims to offer transparent, secure, and community-driven financial operations, integrating blockchain's trust and efficiency with real-world asset values.",
+    "image": "https://raw.githubusercontent.com/bark-community/bark-token/blob/main/src/assets/bark.svg",
+    "animation_url": null,
+    "external_url": "https://barkprotocol.io",
+    "attributes": [
+      {
+        "trait_type": "Utility",
+        "value": "Financial Operations"
+      },
+      {
+        "trait_type": "Blockchain",
+        "value": "Solana"
+      },
+      {
+        "trait_type": "Asset Type",
+        "value": "Real-World Asset (RWA)"
+      },
+      {
+        "trait_type": "Community Driven",
+        "value": "Yes"
+      }
+    ],
+    "collection": {
+      "name": "BARK Wif Hat",
+      "family": "BARK Protocol"
+    },
+    "properties": {
+      "files": [
+        {
+          "uri": "",
+          "type": "image/svg+xml"
+        }
+      ],
+      "category": "image",
+      "creators": [
+        {
+          "address": "D9WuMpssPYnjZdVGtTHKhMbScrkxN3mzwHTQydTRqqCM",
+          "share": 500
+        }
+      ]
+    }
+  }

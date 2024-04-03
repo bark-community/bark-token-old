@@ -26,6 +26,7 @@ BARK serves as both a utility and a governance token within the BARK platform. I
 - **Token Type**: SPL-20
 - **Max Supply**: 25 Billion
 - **Minted Supply**: 25 Billion
+- **Interest Bearing Rate**: 5%
 - **Fee Basis Points**: 500 (5% of each transaction)
 - **Max Fee**: 800 Basis Points (8% of each transaction)
 

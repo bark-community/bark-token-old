@@ -1,15 +1,27 @@
 # BARK Token Program with TypeScript and Anchor Integration
-**Version 1.0.2 Alpha**
+**Version 1.0.0 Beta**
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
 
 The BARK Token Program is a sophisticated Solana-based smart contract designed to streamline the creation, transfer, and management of BARK tokens on the Solana blockchain. This version includes integration with the TypeScript language and the Anchor framework for improved type safety and efficient program development.
 
-## Networks
+# BARK Token
 
-- **Devnet:** BARKhLzdWbyZiP3LNoD9boy7MrAy4CVXEToDyYGeEBKF
-- **Testnet:**
-- **Mainnet:**
+## Overview
+BARK Token is a utility token built on the Solana blockchain.
+
+## Test Token Details
+- Token Name: BARK Test Token
+- Token Symbol: BTT
+- Program ID: TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb
+- Mint Address: 26LtcueLjUVuNUPFBxVA2X3gLtpCD2hqefxnDau9AeFc
+- Cluster: devnet
+
+## Explorer (Dev)
+View token transfers on Solana Explorer: [BARK Test Token Transfers](https://explorer.solana.com/address/26LtcueLjUVuNUPFBxVA2X3gLtpCD2hqefxnDau9AeFc/transfers?cluster=devnet)
+
+## Usage
+BARK Token can be used for various purposes within the BARK ecosystem. Please refer to the BARK Token documentation for detailed usage instructions.
 
 *Notice: This program is developed on the Devnet and tested on Solana Playground.*
 
@@ -166,10 +178,6 @@ The BARK Token Program is a sophisticated Solana-based smart contract designed t
    - [ ] Refactor existing code to TypeScript (.ts files).
    - [ ] Ensure TypeScript types are used wherever applicable.
 
-### Documentation
-
-For detailed documentation, architecture, and how the BARK Token Program works with the Anchor framework and Sealevel, refer to the [BARK Token Program Documentation](./docs/BARK_TOKEN_DOCUMENTATION.md).
-
 ## ToDo List:
 
 1. **Configuration Module:**
@@ -194,6 +202,10 @@ For detailed documentation, architecture, and how the BARK Token Program works w
 ## Contributing
 
 Feel free to contribute by opening issues, proposing new features, or submitting pull requests. Contributions are welcome!
+
+## Resources
+
+- [BARK Documentation](https://github.com/bark-token/bark-token/docs)
 
 ## License
 

@@ -1,212 +1,84 @@
-# BARK Token Program with TypeScript and Anchor Integration
-**Version 1.0.0 Beta**
+# BARK Token
+**Version 1.0.0**
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
 
-The BARK Token Program is a sophisticated Solana-based smart contract designed to streamline the creation, transfer, and management of BARK tokens on the Solana blockchain. This version includes integration with the TypeScript language and the Anchor framework for improved type safety and efficient program development.
-
-# BARK Token
-
-## Overview
-BARK Token is a utility token built on the Solana blockchain.
-
-## Test Token Details
-- Token Name: BARK Test Token
-- Token Symbol: BTT
-- Program ID: TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb
-- Mint Address: 26LtcueLjUVuNUPFBxVA2X3gLtpCD2hqefxnDau9AeFc
-- Cluster: devnet
-
-## Explorer (Dev)
-View token transfers on Solana Explorer: [BARK Test Token Transfers](https://explorer.solana.com/address/26LtcueLjUVuNUPFBxVA2X3gLtpCD2hqefxnDau9AeFc/transfers?cluster=devnet)
+The BARK Token Program is a sophisticated Solana-based program designed to streamline the creation, transfer, staking and management of BARK tokens on the Solana blockchain. This sample version includes integration with the TypeScript language and the Anchor framework for improved type safety and efficient program development.
 
 ## Usage
-BARK Token can be used for various purposes within the BARK ecosystem. Please refer to the BARK Token documentation for detailed usage instructions.
+BARK Token (BARK) can be used for various purposes within the BARK ecosystem. Please refer to the BARK Token documentation for detailed usage instructions.
 
-*Notice: This program is developed on the Devnet and tested on Solana Playground.*
+*Notice: This main.ts program is developed on the Devnet and tested on Solana Playground.*
 
-## Features
+## About BARK Token
 
-- **Minting BARK Tokens**: Create new BARK tokens by initializing the BARK Mint Account.
+BARK serves as both a utility and a governance token within the BARK platform. It aims to:
 
-- **Transfer with Fee**: Transfer BARK tokens from one account to another with an associated fee, calculated based on the configured basis points and a maximum fee.
+- Provide governance rights to the BARK community.
+- Serve as the primary medium of exchange for transactions within the BARK Protocol and its ecosystem.
+- Incentivize participation and contribution among community members.
 
-- **Fee Harvesting**: Accumulated fees in fee accounts can be harvested and transferred back to the BARK Mint Account.
+## Tokenomics
 
-- **Metadata Integration**: Add detailed information about the BARK token, such as name, symbol, URI, and extensions.
+- **Name**: BARK
+- **Symbol**: BARK
+- **Decimals**: 6
+- **Token Type**: SPL-20
+- **Max Supply**: 25 Billion
+- **Minted Supply**: 25 Billion
+- **Fee Basis Points**: 500 (5% of each transaction)
+- **Max Fee**: 800 Basis Points (8% of each transaction)
 
-- **Burning Mechanism**: A burning mechanism burns a percentage of BARK tokens each quarter, starting from a specified quarter.
+## Contract Address (CA)
 
-- **Keypair Generation**: Generate Solana Keypairs for various accounts if not implemented or created.
+- **Mainnet**: [`GsFjUCEsRwXHyahR8XsnnJYrgxBjADwnNJ1wbJbGdMVK`](https://explorer.solana.com/address/GsFjUCEsRwXHyahR8XsnnJYrgxBjADwnNJ1wbJbGdMVK)
+- **Devnet:**  [`26LtcueLjUVuNUPFBxVA2X3gLtpCD2hqefxnDau9AeFc`](https://explorer.solana.com/address/26LtcueLjUVuNUPFBxVA2X3gLtpCD2hqefxnDau9AeFc/transfers?cluster=devnet)
 
-## Implement:
+## Key Features:
 
-- **CoinMarketCap API Integration**: Retrieve real-time market data for the BARK token using the Coincecho or CoinMarketCap API.
+- **Governance**: Token holders can participate in governance votes to influence the development and direction of the BARK platform.
+- **Utility**: BARK tokens can be used across a variety of applications and services within the BARK ecosystem.
+- **Fee Redistribution**: Transaction fees are redistributed to support the ongoing development of the BARK platform and reward active community members.
+- **Humanitarian Aid**: Providing assistance to communities affected by natural disasters, conflicts, or other crises, ensuring access to essential resources and support.
 
 ## Getting Started
 
-### Prerequisites
+To interact with BARK tokens, you will need a Solana wallet set up. Recommend using [Phantom](https://phantom.app/) or [Sollet](https://www.sollet.io/).
 
-- Node.js
-- Solana CLI
-- TypeScript
-- Anchor
-- Rust
+### Transferring BARK Tokens
 
-### Installation
+1. Ensure you have SOL in your wallet to cover transaction fees.
+2. Use the wallet interface to add BARK Token using the contract (CA) address provided above.
+3. Transfer BARK tokens to any Solana address as you would with SOL.
 
-1. **Clone the repository:**
+## BARK Test Tokens
 
-   ```bash
-   git clone https://github.com/bark-community/bark-token.git
-   cd bark-token
-   ```
+**Devnet Contract Address**: `Please provide the Devnet CA here`
 
-2. **Install dependencies:**
+**Faucet**: `Link to the faucet when available, for obtaining test tokens`
 
-   ```bash
-   npm install
-   ```
+## Use Cases
 
-3. **Build the project:**
+- **Governance Voting**: BARK token holders can vote on proposals to shape the future direction of the ecosystem.
+- **Access Control**: Holding a certain amount of BARK tokens could grant access to specific features or areas within the BARK ecosystem.
+- **Staking Rewards**: Users can stake their BARK tokens to receive rewards, contributing to the security and stability of the platform.
 
-   ```bash
-   npm run build
-   ```
+### Participating in Governance (Under Construction)
 
-4. **Configure BARK API Keys:** (Not implemented)
+Stay tuned for updates on governance features and how you can participate in decision-making processes using your BARK tokens.
 
-   Create a `config` folder in the `src` directory and add an `index.ts` file to store API keys:
+**Solana Realm**:
 
-   ```typescript
-   // src/config/index.ts
-   export const COINMARKETCAP_API_KEY = 'BARK_COINMARKETCAP_API_KEY';
-   ```
+## Development
 
-### Usage
+Interested in contributing? Check out our [contribution guidelines](CONTRIBUTING.md) and feel free to submit pull requests or open issues to discuss proposed changes or features.
 
-1. **Initialize Connection**: Establish a connection to the Solana blockchain.
+## Testing
 
-2. **Check Balance**: Verify the SOL balance of the wallet.
-
-3. **Initialize Mint Account**: Create and initialize the BARK Mint Account.
-
-   ```typescript
-   // Example usage of initializeMintAccount function
-   await initializeMintAccount();
-   ```
-
-4. **Initialize Solana Accounts**: Create source and destination token accounts for BARK tokens.
-
-   ```typescript
-   // Example usage of initializeSolanaAccounts function
-   const [sourceTokenAccount, destinationTokenAccount] = await initializeSolanaAccounts();
-   ```
-
-5. **Transfer BARK with Fee**: Transfer BARK tokens from the source account to the destination account with an associated fee.
-
-   To initiate a BARK transfer with an associated fee, use the `transferBarkWithFee` function. This function not only transfers BARK tokens but also charges a fee based on the configured fee structure.
-
-   ```typescript
-   // Example usage of transferBarkWithFee function
-   await transferBarkWithFee(sourceTokenAccount, destinationTokenAccount, config.MINT_AMOUNT);
-   ```
-
-6. **Withdraw Fees**: Withdraw accumulated fees from the destination account.
-
-   To manage accumulated fees associated with token transfers, use the `withdrawFees` function. This function identifies fee accounts linked to the destination account, withdraws accumulated fees, and transfers them back to the BARK Mint Account.
-
-   ```typescript
-   // Example usage of withdrawFees function
-   await withdrawFees(destinationTokenAccount, [sourceTokenAccount]);
-   ```
-
-7. **Transfer BARK Again**: Perform another BARK transfer.
-
-   ```typescript
-   // Example usage of transferBarkWithFee function for a second transfer
-   await transferBarkWithFee(sourceTokenAccount, destinationTokenAccount, config.MINT_AMOUNT);
-   ```
-
-8. **Harvest Fees to Mint**: Harvest accumulated fees and transfer them back to the BARK Mint Account.
-
-   ```typescript
-   // Example usage of harvestWithheldTokensToMint function
-   await harvestWithheldTokensToMint(mint, existingFeeAccount);
-   ```
-
-9. **Withdraw Fees Again**: Withdraw fees from the destination account.
-
-   ```typescript
-   // Example usage of withdrawFees function for a second withdrawal
-   await withdrawFees(destinationTokenAccount, [], true);
-   ```
-
-10. **Burning Mechanism**: Check the current quarter, and if the burning quarter is reached, calculate and burn a percentage of BARK tokens.
-
-    - Token Burn Rate: 2% Quarterly
-    - Burning will start from Quarter 3. Current Quarter: 1
-
-   ```typescript
-   // Example usage of burnTokens function
-   await burnTokens(burnAccounts[0].pubkey, burnAmount);
-   ```
-
-11. **Keypair Generation**: Generate Solana Keypairs for various accounts.
-
-   ```typescript
-   // Example usage of keypair generation
-   const keypair = generateKeypair();
-   ```
-
-12. **Anchor Program Integration ToDo**
-
-   - [ ] Create a new Anchor program file (e.g., `bark-token.ts`).
-   - [ ] Define the necessary instructions, state, and accounts for the BARK Token program.
-   - [ ] Implement the integration logic with the existing BARK Token program.
-
-13. **Metadata Pointer**: Update the Metadata section with the correct implementation.
-
-14. **Features to Update**: Include new features and improvements.
-
-15. **Controlling Tokens**: [To be updated]
-
-### TypeScript Integration ToDo
-
-   - [ ] Update the project to use TypeScript for improved type safety and code clarity.
-   - [ ] Create TypeScript configurations (tsconfig.json).
-   - [ ] Refactor existing code to TypeScript (.ts files).
-   - [ ] Ensure TypeScript types are used wherever applicable.
-
-## ToDo List:
-
-1. **Configuration Module:**
-   - [ ] Create a new file (e.g., `config.ts`) to act as the configuration module.
-   - [ ] Export a configuration object containing all relevant constants and configuration parameters.
-
-2. **Function Decomposition:**
-   - [ ] Identify functions that can be broken down into smaller, focused functions.
-   - [ ] Create new functions with clear responsibilities and names that reflect their purpose.
-   - [ ] Ensure that each function has a single responsibility.
-   - [ ] Develop BARK (BRK) Token Standard
-
-3. **Treasury Account / Wallet Logic:**
-   - [ ] Define the Treasury Account/Wallet address in your code.
-   - [ ] Create a new function (`sendToTreasury`) to handle the transfer of BARK tokens to the Treasury Account.
-   - [ ] Integrate the `sendToTreasury` function where appropriate in your main process.
-
-4. **Documentation:**
-   - [ ] Add changes, new features, and improvements.
-   - [ ] Provide clear instructions for users on how to utilize the new features.
-
-## Contributing
-
-Feel free to contribute by opening issues, proposing new features, or submitting pull requests. Contributions are welcome!
+We encourage testing on Solana's Devnet before interacting with the main contract. Please refer to the [Solana documentation](https://docs.solana.com/) for guidance on setting up a test environment.
 
 ## Resources
 
-- [BARK Documentation](https://github.com/bark-token/bark-token/docs)
-
-## License
-
-MIT License [LICENSE](./LICENSE)
+- [Documentation](https://github.com/bark-token/barkpaper_v1.0)
+- [Initial Token Offering (ITO)]() TBA
+- [Token Sale Platform]()

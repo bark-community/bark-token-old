@@ -28,7 +28,8 @@ BARK serves as both a utility and a governance token within the BARK platform. I
 - **Minted Supply**: 25 Billion
 - **Interest Bearing Rate**: 5%
 - **Fee Basis Points**: 500 (5% of each transaction)
-- **Max Fee**: 800 Basis Points (8% of each transaction)
+- **Max Fee**: 1000 Basis Points (10% of each transaction)
+- **Burn Rate**: 2.5% Quarterly
 
 ## Contract Address (CA)
 

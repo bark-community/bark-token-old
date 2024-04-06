@@ -1,45 +1,51 @@
 {
-    "name": "BARK",
-    "symbol": "BARK",
-    "description": "BARK, a real-world asset token (RWA) on the Solana blockchain, driven by community contributions. It aims to offer transparent, secure, and community-driven financial operations, integrating blockchain's trust and efficiency with real-world asset values.",
-    "image": "https://github.com/bark-community/bark-token/blob/28a0367f66edc560fad4c5a538d25feaaf946dfd/src/assets/bark.svg",
-    "animation_url": null,
-    "external_url": "https://barkprotocol.io",
-    "attributes": [
+  "name": "BARK",
+  "symbol": "BARK",
+  "description": "BARK, a real-world asset token (RWA) on the Solana blockchain, driven by community contributions. It aims to offer transparent, secure, and community-driven financial operations, integrating blockchain's trust and efficiency with real-world asset values.",
+  "image": "https://github.com/bark-community/bark-token/blob/28a0367f66edc560fad4c5a538d25feaaf946dfd/src/assets/bark.svg",
+  "animation_url": null,
+  "external_url": "https://barkprotocol.io",
+  "extensions": {
+    "website_url": "https://barkprotocol.io",
+    "twitter": "https://twitter.com/bark_protocol",
+    "discord": "https://discord.gg/QY9NvRYz",
+    "telegram": "https://t.me/+EnczyzzKS_k2NmQ0"
+  },
+  "attributes": [
+    {
+      "trait_type": "Utility",
+      "value": "Financial Operations, Governance"
+    },
+    {
+      "trait_type": "Blockchain",
+      "value": "Solana"
+    },
+    {
+      "trait_type": "Asset Type",
+      "value": "Real-World Asset (RWA)"
+    },
+    {
+      "trait_type": "Community Driven",
+      "value": "Yes"
+    }
+  ],
+  "collection": {
+    "name": "BARK Wif Hat",
+    "family": "BARK Protocol"
+  },
+  "properties": {
+    "files": [
       {
-        "trait_type": "Utility",
-        "value": "Financial Operations"
-      },
-      {
-        "trait_type": "Blockchain",
-        "value": "Solana"
-      },
-      {
-        "trait_type": "Asset Type",
-        "value": "Real-World Asset (RWA)"
-      },
-      {
-        "trait_type": "Community Driven",
-        "value": "Yes"
+        "uri": "https://github.com/bark-community/bark-token/blob/28a0367f66edc560fad4c5a538d25feaaf946dfd/src/assets/bark.svg",
+        "type": "image/svg+xml"
       }
     ],
-    "collection": {
-      "name": "BARK Wif Hat",
-      "family": "BARK Protocol"
-    },
-    "properties": {
-      "files": [
-        {
-          "uri": "",
-          "type": "image/svg+xml"
-        }
-      ],
-      "category": "image",
-      "creators": [
-        {
-          "address": "D9WuMpssPYnjZdVGtTHKhMbScrkxN3mzwHTQydTRqqCM",
-          "share": 500
-        }
-      ]
-    }
+    "category": "image",
+    "creators": [
+      {
+        "address": "D9WuMpssPYnjZdVGtTHKhMbScrkxN3mzwHTQydTRqqCM",
+        "share": 500
+      }
+    ]
   }
+}

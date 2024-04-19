@@ -40,7 +40,7 @@ BARK serves as both a utility and a governance token within the BARK platform. I
 
 ## Account:
 
-!(Account]:SolScan(https://solscan.io/account/5NFpCtYGhvjx2rp89pB7yhRta4NxHjQNvh3kukYRr2cT)
+**SolScan**: (https://solscan.io/account/5NFpCtYGhvjx2rp89pB7yhRta4NxHjQNvh3kukYRr2cT)
 
 ## Key Features:
 

@@ -2,7 +2,7 @@
   "name": "BARK",
   "symbol": "BARK",
   "description": "BARK, a real-world asset token (BRWA) on the Solana blockchain, driven by community contributions. It aims to offer transparent, secure, and community-driven financial operations, integrating blockchain's trust and efficiency with real-world asset values.",
-  "image": "https://github.com/bark-community/bark-token/blob/033c043e7f01ba73a9d71876eedb79209f1963cb/src/assets/bark.png",
+  "image": "https://raw.githubusercontent.com/bark-community/bark-token/main/src/assets/bark.svg",
   "animation_url": null,
   "extensions": {
     "website": "https://barkprotocol.net",

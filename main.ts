@@ -161,7 +161,7 @@ const metaData = {
   mint: mint,
   name: "BARK",
   symbol: "BARK",
-  uri: "https://raw.githubusercontent.com/bark-community/bark-token/main/src/assets/bark.svg",
+  uri: "https://github.com/bark-community/bark-token/blob/d97f533bbe934c60d0dac3a707125d055f115472/src/assets/bark.png",
   extensions: {
     website: "https://barkprotocol.net",
     socialMedia: {

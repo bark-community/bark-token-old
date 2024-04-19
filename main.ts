@@ -5,8 +5,9 @@
  * It includes features such as minting, transferring with fees, withdrawing fees, burning BARK tokens, and more.
  *
  * Author: BARK Protocol
- * Date: March 20, 2024
- * Version: 1.0.4-Alpha
+ * Date: May 19, 2024
+ *  BARK Test Token
+ * Version: 1.0.0 Beta
  *
  * Libraries:
  * - @solana/web3.js: Solana Web3 library for interacting with the Solana blockchain.
@@ -52,30 +53,27 @@ import {
   TokenMetadata,
 } from "@solana/spl-token-metadata";
 
-// Define and initialize configuration parameters
 const config = {
   COMMITMENT_LEVEL: "confirmed",
   clusterUrl: clusterApiUrl("devnet"),
   FEE_BASIS_POINTS: 500, // 5%
-  MAX_FEE: BigInt(800), // 8%
-  MINT_AMOUNT: 20_000_000_000_000n, // 20 Billion tokens
+  MAX_FEE: BigInt(1000), // 10%
+  MINT_AMOUNT: 25_000_000_000_000n, // 25 Billion tokens
   DECIMALS: 3,
-  MAX_SUPPLY: BigInt("20000000000000"),
+  MAX_SUPPLY: BigInt("25000000000000"),
   TRANSFER_AMOUNT: BigInt(10_000),
   LAMPORTS_PER_SOL: 1000000000,
   BURN_START_QUARTER: 3,
   BURN_START_YEAR: 2024,
   BURN_RATE: 0.025,
   TOKEN_2022_PROGRAM_ID: new PublicKey("TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb"),
-  BARK_ACCOUNT: new PublicKey('BARKhLzdWbyZiP3LNoD9boy7MrAy4CVXEToDyYGeEBKF'),
-  FREEZE_AUTHORITY: new PublicKey('BARKhLzdWbyZiP3LNoD9boy7MrAy4CVXEToDyYGeEBKF'),
+  BARK_ACCOUNT: new PublicKey('BARKanRruQPJbJoBEJATQg5hrmaQ1NNNFdTwdgGgRaBd'),
+  FREEZE_AUTHORITY: new PublicKey('BARKanRruQPJbJoBEJATQg5hrmaQ1NNNFdTwdgGgRaBd'),
   BURN_WALLET_ADDRESS: "BURNF5qPfU1A9wSYCB4x4VUwQd398VHqwMHCCsDhp134",
 };
 
-// Connection to devnet cluster
 const connection = new Connection(config.clusterUrl, config.COMMITMENT_LEVEL);
 
-// BARK wallet
 let payerWallet;
 if (pg && pg.wallet && pg.wallet.keypair) {
   payerWallet = pg.wallet.keypair;
@@ -84,7 +82,6 @@ if (pg && pg.wallet && pg.wallet.keypair) {
   throw new Error("Unable to access payer wallet keypair.");
 }
 
-// Generate a new keypair for the Mint BARK Account
 let mintKeypair;
 try {
   mintKeypair = Keypair.generate();
@@ -94,8 +91,7 @@ try {
 }
 const mint = mintKeypair.publicKey;
 
-// BARK Mint Authority and Transfer Fee Config Authority
-const mintAuthority = pg?.wallet?.publicKey; // Ensure that `pg` and `wallet` are defined
+const mintAuthority = pg?.wallet?.publicKey;
 const transferFeeConfigAuthority = pg?.wallet?.keypair;
 const withdrawWithheldAuthority = pg?.wallet?.keypair;
 const burnAuthority = pg?.wallet?.keypair;
@@ -104,30 +100,15 @@ if (!updateAuthority) {
   throw new Error("Update authority is undefined.");
 }
 
-// Define the total supply and calculate decimals
-const totalSupply = BigInt("20000000000") * BigInt(10 ** 9);
-const decimals = 3; // Assuming 9 decimal places based on the provided calculation
-
-// Calculate the scale factor for the decimals
+const totalSupply = BigInt("25000000000") * BigInt(10 ** 9);
+const decimals = 3;
 const scaleFactor = BigInt(10 ** decimals);
-
-// Define the mint amount based on max supply and decimals
 const mintAmount = totalSupply * scaleFactor;
 
-/**
- * Function to initialize fee account space
- * @param {Connection} connection - The connection to the Solana cluster
- * @returns {Promise<{FEE_ACCOUNT_SPACE: number, FEE_ACCOUNT_LAMPORTS: number}>} - The fee account space and lamports
- * @throws Will throw an error if failed to initialize fee account space
- */
 async function initializeFeeAccountSpace(connection) {
   try {
-    // Ensure FEE_ACCOUNT_SPACE is defined
     const FEE_ACCOUNT_SPACE = getMintLen([ExtensionType.TransferFeeConfig]);
-
-    // Get the minimum balance for rent exemption for the fee account
     const FEE_ACCOUNT_LAMPORTS = await connection.getMinimumBalanceForRentExemption(FEE_ACCOUNT_SPACE);
-
     return { FEE_ACCOUNT_SPACE, FEE_ACCOUNT_LAMPORTS };
   } catch (error) {
     console.error("Error initializing fee account space:", error.message);
@@ -135,17 +116,13 @@ async function initializeFeeAccountSpace(connection) {
   }
 }
 
-// Call the function to initialize fee account space
 const { FEE_ACCOUNT_SPACE, FEE_ACCOUNT_LAMPORTS } = await initializeFeeAccountSpace(connection);
 console.log("FEE_ACCOUNT_SPACE:", FEE_ACCOUNT_SPACE);
 console.log("FEE_ACCOUNT_LAMPORTS:", FEE_ACCOUNT_LAMPORTS);
 
-
-// Calculate minimum balance for rent exemption
 const mintLen = getMintLen([ExtensionType.TransferFeeConfig]);
 const lamports = await connection.getMinimumBalanceForRentExemption(mintLen);
 
-// Log debug information
 console.log("pg:", pg);
 console.log("wallet:", pg?.wallet);
 console.log("mintAuthority:", mintAuthority);
@@ -155,53 +132,61 @@ console.log("burnAuthority:", burnAuthority);
 console.log("metaData:", metaData);
 console.log("updateAuthority:", updateAuthority);
 
-// Define BARK metadata to store in the Mint Account
 const metaData = {
   updateAuthority: mintAuthority,
   mint: mint,
   name: "BARK",
   symbol: "BARK",
-  uri: "https://github.com/bark-community/bark-token/blob/d97f533bbe934c60d0dac3a707125d055f115472/src/assets/bark.png",
+  uri: "https://raw.githubusercontent.com/bark-community/bark-token/main/src/assets/bark.svg",
   extensions: {
     website: "https://barkprotocol.net",
+    token_sale_platform: "https://invest.barkprotocol.net",
     socialMedia: {
+      bark_dao: "https://app.realms.today/realm/bark/hub",
       twitter: "https://twitter.com/bark_protocol",
-      discord: "https://discord.gg/DncjRZQD",
+      discord: "https://discord.gg/CjUeKEB7b6",
       telegram: "https://t.me/+EnczyzzKS_k2NmQ0",
-      additionalMetadata: [
-        ["description", "BARK, a digital asset on the Solana blockchain, driven by community contributions."],
-      ],
+      medium: "https://medium.com/@barkprotocol",
     },
+    additionalMetadata: [
+      ["description", "BARK, a real-world asset token (BRWA) on the Solana blockchain, driven by community contributions. It aims to offer transparent, secure, and community-driven financial operations, integrating blockchain's trust and efficiency with real-world asset values."],
+      ["traits", [
+        { trait_type: "Utility", value: "Financial Operations, Governance" },
+        { trait_type: "Blockchain", value: "Solana" },
+        { trait_type: "Asset Type", value: "Real-World Asset (RWA)" },
+        { trait_type: "Community Driven", value: "Yes" },
+      ]],
+    ],
   },
 };
 
-// Initialize BARK Metadata Account data
 const initializeMetadataInstruction = await createInitializeInstruction({
-  programId: TOKEN_2022_PROGRAM_ID, // SPL Token Extension Program as Metadata Program
-  mint: mint, // Mint Account address
-  updateAuthority: updateAuthority, // Ensure that `updateAuthority` is defined
-  metadata: mint, // Account address that holds the BARK metadata (typically same as mint for simplicity)
-  mintAuthority: mintAuthority, // Designated Mint Authority
+  programId: TOKEN_2022_PROGRAM_ID,
+  mint: mint,
+  updateAuthority: updateAuthority,
+  metadata: mint,
+  mintAuthority: mintAuthority,
   data: {
     name: metaData.name,
     symbol: metaData.symbol,
     uri: metaData.uri,
-    ...metaData.extensions, // Spread additional metadata extensions
+    ...metaData.extensions,
+    ...metaData.extensions.additionalMetadata.reduce((acc, [key, value]) => {
+      acc[key] = value;
+      return acc;
+    }, {}),
   },
 });
 
-// Helper function for error handling
 function handleError(error, errorMessage) {
-  console.error(errorMessage, error);
+  console.error(errorMessage, error.stack || error);
   throw new Error(errorMessage);
 }
 
-// Helper function to log transaction details
 function logTransactionDetails(message, signature) {
   console.log(`\n${message}: https://solana.fm/tx/${signature}?cluster=devnet`);
 }
 
-// Function to initialize the Solana connection
 async function initializeConnection() {
   try {
     const connection = new Connection(config.clusterUrl, config.COMMITMENT_LEVEL);
@@ -211,12 +196,10 @@ async function initializeConnection() {
   }
 }
 
-// Function to create a new fee account
 async function createFeeAccount(payer) {
   try {
     const newFeeAccountKeypair = Keypair.generate();
     const newFeeAccount = newFeeAccountKeypair.publicKey;
-
     const createFeeAccountInstruction = SystemProgram.createAccount({
       fromPubkey: payer.publicKey,
       newAccountPubkey: newFeeAccount,
@@ -224,11 +207,8 @@ async function createFeeAccount(payer) {
       lamports: FEE_ACCOUNT_LAMPORTS,
       programId: TOKEN_2022_PROGRAM_ID,
     });
-
     const createFeeAccountTransaction = new Transaction().add(createFeeAccountInstruction);
-
     await sendAndConfirmTransaction(connection, createFeeAccountTransaction, [payer, newFeeAccountKeypair]);
-
     console.log(`New fee account created: ${newFeeAccount.toBase58()}`);
     return newFeeAccount;
   } catch (error) {
@@ -236,24 +216,17 @@ async function createFeeAccount(payer) {
   }
 }
 
-// Function to create a Solana account with signature
 async function createSolanaAccountWithSignature(instruction, signers = []) {
   try {
-    // Validate parameters
     if (!(instruction instanceof Transaction)) {
       throw new Error("Invalid instruction. Expected a Transaction object.");
     }
     if (!Array.isArray(signers) || signers.length === 0) {
       throw new Error("Invalid signers array. At least one signer is required.");
     }
-
     console.log("Sending transaction to create Solana account...");
-
-    // Send and confirm transaction
     const signature = await sendAndConfirmTransaction(connection, instruction, signers);
-
     console.log("Transaction successful. Signature:", signature);
-
     return signature;
   } catch (error) {
     console.error("Error creating Solana account with signature:", error.message);
@@ -261,7 +234,6 @@ async function createSolanaAccountWithSignature(instruction, signers = []) {
   }
 }
 
-// Function to initialize the Mint BARK Account
 async function initializeMintAccount() {
   try {
     const transaction = new Transaction()
@@ -289,7 +261,6 @@ async function initializeMintAccount() {
           config.TOKEN_2022_PROGRAM_ID,
         ),
       );
-
     const transactionSignature = await createSolanaAccountWithSignature(transaction, [payerWallet, mintKeypair]);
     logTransactionDetails("Create Solana Account", transactionSignature);
   } catch (error) {
@@ -298,27 +269,15 @@ async function initializeMintAccount() {
   }
 }
 
-// Function to initialize the Mint BARK Account and Token Metadata
 async function initializeMintAccountAndTokenMetadata() {
   try {
-    // Step 1: Initialize Mint BARK Account
     await initializeMintAccount();
-
-    // Step 2: Add Token Metadata logic here
-    // For example:
-    // - Create a new token metadata account
-    // - Set metadata for the Mint BARK Account
-    // - Configure additional metadata properties
-
-    // Note: Customize this section based on token metadata requirements
-
   } catch (error) {
     console.error("Error initializing Mint Account and BARK Token Metadata:", error.message);
     throw new Error("Failed to initialize Mint Account and BARK Token Metadata");
   }
 }
 
-// Function to initialize Solana accounts
 async function initializeSolanaAccounts() {
   try {
     const sourceOwnerKeypair = payerWallet;
@@ -331,7 +290,6 @@ async function initializeSolanaAccounts() {
       undefined,
       TOKEN_2022_PROGRAM_ID,
     );
-
     const destinationOwnerKeypair = Keypair.generate();
     const destinationTokenAccount = await createAccount(
       connection,
@@ -342,7 +300,6 @@ async function initializeSolanaAccounts() {
       undefined,
       TOKEN_2022_PROGRAM_ID,
     );
-
     return [sourceTokenAccount, destinationTokenAccount];
   } catch (error) {
     console.error("Error initializing Solana accounts:", error.message);
@@ -350,30 +307,21 @@ async function initializeSolanaAccounts() {
   }
 }
 
-// Function to perform a BARK token transfer with fee
 async function transferBarkWithFee(sourceTokenAccount, destinationTokenAccount, mintAmount) {
   try {
-    // Check if source and destination token accounts are defined
     if (!sourceTokenAccount || !destinationTokenAccount) {
       console.error("Source or destination token account is undefined.");
       return;
     }
-
-    // Retrieve source account information
     const sourceAccountInfo = await connection.getAccountInfo(sourceTokenAccount);
     const sourceAccountBalance = sourceAccountInfo ? sourceAccountInfo.lamports : 0;
     console.log(`Source account balance before transfer: ${sourceAccountBalance}`);
-
-    // Check if source account has sufficient balance for transfer
     if (sourceAccountBalance < config.TRANSFER_AMOUNT) {
       console.error("Insufficient balance in source account for transfer.");
       return;
     }
-
     console.log("Source account:", sourceTokenAccount.toBase58());
     console.log("Destination account:", destinationTokenAccount.toBase58());
-
-    // Mint BARK tokens to the source account
     const mintToSignature = await mintTo(
       connection,
       payerWallet,
@@ -386,12 +334,8 @@ async function transferBarkWithFee(sourceTokenAccount, destinationTokenAccount, 
       config.TOKEN_2022_PROGRAM_ID,
     );
     logTransactionDetails("Mint BARK", mintToSignature);
-
-    // Calculate the fee to be charged
     const fee = (config.TRANSFER_AMOUNT * BigInt(config.FEE_BASIS_POINTS)) / BigInt(10_000);
     const feeCharged = fee > config.MAX_FEE ? Number(config.MAX_FEE) : Number(fee);
-
-    // Transfer BARK tokens with fee to the destination account
     const transferSignature = await transferCheckedWithFee(
       connection,
       payerWallet,
@@ -412,19 +356,14 @@ async function transferBarkWithFee(sourceTokenAccount, destinationTokenAccount, 
   }
 }
 
-// Function to filter accounts to withdraw
 async function filterAccountsToWithdraw(destinationTokenAccount, accountsToWithdrawFrom, programId) {
   try {
-    // Use Promise.all() to concurrently fetch account info for all accounts
     const accountInfoPromises = accountsToWithdrawFrom.map(account => connection.getAccountInfo(account, config.COMMITMENT_LEVEL));
     const accountInfos = await Promise.all(accountInfoPromises);
-
-    // Filter accounts based on programId
     const filteredAccounts = accountsToWithdrawFrom.filter((account, index) => {
       const accountInfo = accountInfos[index];
       return accountInfo && accountInfo.owner.equals(programId);
     });
-
     return filteredAccounts;
   } catch (error) {
     console.error("Error filtering accounts to withdraw:", error.message);
@@ -432,7 +371,6 @@ async function filterAccountsToWithdraw(destinationTokenAccount, accountsToWithd
   }
 }
 
-// Function to handle fee withdrawal
 async function withdrawFees(destinationTokenAccount, accountsToWithdrawFrom, isMint = false) {
   try {
     const filteredAccounts = await filterAccountsToWithdraw(
@@ -440,10 +378,8 @@ async function withdrawFees(destinationTokenAccount, accountsToWithdrawFrom, isM
       accountsToWithdrawFrom,
       TOKEN_2022_PROGRAM_ID
     );
-
     if (filteredAccounts.length > 0) {
       console.log("Accounts selected for withdrawal:", filteredAccounts.map(account => account.toString()));
-
       const withdrawSignature = await withdrawWithheldTokensFromAccounts(
         connection,
         payerWallet,
@@ -465,22 +401,18 @@ async function withdrawFees(destinationTokenAccount, accountsToWithdrawFrom, isM
   }
 }
 
-// Function to harvest withheld fees and transfer to Mint BARK Account
 async function harvestWithheldTokensToMint(mintAccount, feeAccount) {
   try {
     const feeAccountKey = new PublicKey(feeAccount);
     const feeAccountInfo = await connection.getAccountInfo(feeAccountKey, config.COMMITMENT_LEVEL);
-
     if (!feeAccountInfo) {
       console.log(`Fee account ${feeAccount} not found. Creating a new fee account...`);
       const newFeeAccount = await createFeeAccount(payerWallet);
       console.log(`Using the newly created fee account: ${newFeeAccount.toBase58()}`);
       return newFeeAccount;
     }
-
     const feeAccountData = unpackAccount(feeAccountKey, feeAccountInfo.data, config.TOKEN_2022_PROGRAM_ID);
     const withheldAmount = getTransferFeeAmount(feeAccountData)?.withheldAmount || 0;
-
     if (withheldAmount > 0) {
       const transferSignature = await transferCheckedWithFee(
         connection,
@@ -505,7 +437,6 @@ async function harvestWithheldTokensToMint(mintAccount, feeAccount) {
   }
 }
 
-// Function to check the balance of the wallet
 async function checkBalance() {
   try {
     const balance = await connection.getBalance(payerWallet.publicKey);
@@ -516,36 +447,28 @@ async function checkBalance() {
   }
 }
 
-// Calculate Token Burn Amount
 function calculateBurnAmount(amount) {
-  // Ensure that the burn amount is always rounded down to the nearest integer
   return BigInt(Math.floor(Number(amount) * config.BURN_RATE));
 }
 
-// Function to get the current quarter
 function getCurrentQuarter() {
-  // Use UTC methods to ensure consistency across time zones
   const currentDate = new Date();
-  const currentMonth = currentDate.getUTCMonth() + 1; // Month index starts from 0
+  const currentMonth = currentDate.getUTCMonth() + 1;
   return Math.floor((currentMonth - 1) / 3) + 1;
 }
 
-// Function to burn tokens
 async function burnTokens(tokenAccount, burnAmount) {
   try {
-    // Ensure that burnAmount is a positive BigInt value
     if (burnAmount <= 0n) {
       console.error("Invalid burn amount:", burnAmount);
       return;
     }
-
-    // Perform the BARK token burn
     const burnSignature = await transferChecked(
       connection,
       payerWallet,
       tokenAccount,
-      null, // Burn authority doesn't require a mint parameter
-      payerWallet.publicKey, // Destination account is the same as the payer's account
+      null,
+      payerWallet.publicKey,
       burnAmount,
       config.TOKEN_2022_PROGRAM_ID,
     );
@@ -556,25 +479,18 @@ async function burnTokens(tokenAccount, burnAmount) {
   }
 }
 
-// Main function to orchestrate the entire process.
 async function main() {
   try {
     await checkBalance();
     await initializeMintAccountAndTokenMetadata();
-    const [sourceTokenAccount, destinationTokenAccount] = await initializeSolanaAccounts();
+    const [sourceTokenAccount, destinationTokenAccount] = await initializeSolana_accounts();
     await transferBarkWithFee(sourceTokenAccount, destinationTokenAccount, config.MINT_AMOUNT);
     await withdrawFees(destinationTokenAccount, [sourceTokenAccount]);
-
-    // Check if the current quarter is greater than or equal to the burn start quarter
     const currentQuarter = getCurrentQuarter();
     if (currentQuarter >= config.BURN_START_QUARTER) {
       console.log("Quarter >= BURN_START_QUARTER. Burning tokens...");
-      
-      // Calculate the burn amount based on the configured burn rate
       const burnAmount = calculateBurnAmount(config.MINT_AMOUNT);
       console.log("Burn amount:", burnAmount);
-
-      // Burn tokens only if the calculated burn amount is positive
       if (burnAmount > 0n) {
         await burnTokens(destinationTokenAccount, burnAmount);
       } else {
@@ -589,5 +505,4 @@ async function main() {
   }
 }
 
-// Run the main function
 main();

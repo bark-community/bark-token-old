@@ -1,3 +1,5 @@
+![icon](https://github.com/bark-community/bark-token/blob/d97f533bbe934c60d0dac3a707125d055f115472/src/assets/bark.png)
+
 # BARK Token
 **Version 1.0.0**
 

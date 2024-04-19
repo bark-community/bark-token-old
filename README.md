@@ -36,7 +36,11 @@ BARK serves as both a utility and a governance token within the BARK platform. I
 ## Contract Address (CA)
 
 - **Mainnet**: [`GsFjUCEsRwXHyahR8XsnnJYrgxBjADwnNJ1wbJbGdMVK`](https://explorer.solana.com/address/GsFjUCEsRwXHyahR8XsnnJYrgxBjADwnNJ1wbJbGdMVK)
-- **Devnet:**  [`26LtcueLjUVuNUPFBxVA2X3gLtpCD2hqefxnDau9AeFc`](https://explorer.solana.com/address/26LtcueLjUVuNUPFBxVA2X3gLtpCD2hqefxnDau9AeFc/transfers?cluster=devnet)
+- **Devnet:**  [`26LtcueLjUVuNUPFBxVA2X3gLtpCD2hqefxnDau9AeFc`](https://explorer.solana.com/address/26LtcueLjUVuNUPFBxVA2X3gLtpCD2hqefxnDau9AeFc/transfers?-cluster=devnet)
+
+## Account:
+
+!(Account]:SolScan(https://solscan.io/account/5NFpCtYGhvjx2rp89pB7yhRta4NxHjQNvh3kukYRr2cT)
 
 ## Key Features:
 

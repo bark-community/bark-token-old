@@ -1,20 +1,22 @@
 {
   "name": "BARK",
   "symbol": "BARK",
-  "description": "BARK, a real-world asset token (RWA) on the Solana blockchain, driven by community contributions. It aims to offer transparent, secure, and community-driven financial operations, integrating blockchain's trust and efficiency with real-world asset values.",
+  "description": "BARK, a real-world asset token (BRWA) on the Solana blockchain, driven by community contributions. It aims to offer transparent, secure, and community-driven financial operations, integrating blockchain's trust and efficiency with real-world asset values.",
   "image": "https://github.com/bark-community/bark-token/blob/d97f533bbe934c60d0dac3a707125d055f115472/src/assets/bark.png",
   "animation_url": null,
   "extensions": {
-    "website": "https://barkprotocol.io",
+    "website": "https://barkprotocol.net",
+    "token_sale": "https://invest.barkprotocol.net",
     "bark_dao": "https://app.realms.today/realm/bark/hub",
     "twitter": "https://twitter.com/bark_protocol",
-    "discord": "https://discord.gg/QY9NvRYz",
-    "telegram": "https://t.me/+EnczyzzKS_k2NmQ0"
+    "discord": "https://discord.gg/CjUeKEB7b6",
+    "telegram": "https://t.me/+EnczyzzKS_k2NmQ0",
+    "medium": "https://medium.com/@barkprotocol"
   },
   "attributes": [
     {
       "trait_type": "Utility",
-      "value": "Financial Operations, Governance"
+      "value": "Financial Operations, Payment, Governance"
     },
     {
       "trait_type": "Blockchain",

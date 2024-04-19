@@ -30,24 +30,5 @@
       "trait_type": "Community Driven",
       "value": "Yes"
     }
-  ],
-  "collection": {
-    "name": "BARK Wif Hat",
-    "family": "BARK Protocol"
-  },
-  "properties": {
-    "files": [
-      {
-        "uri": "https://github.com/bark-community/bark-token/blob/28a0367f66edc560fad4c5a538d25feaaf946dfd/src/assets/bark.svg",
-        "type": "image/svg+xml"
-      }
-    ],
-    "category": "image",
-    "creators": [
-      {
-        "address": "D9WuMpssPYnjZdVGtTHKhMbScrkxN3mzwHTQydTRqqCM",
-        "share": 500
-      }
-    ]
-  }
+  ]
 }

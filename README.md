@@ -33,10 +33,14 @@ BARK serves as both a utility and a governance token within the BARK platform. I
 - **Max Fee**: 1000 Basis Points (10% of each transaction)
 - **Burn Rate**: 2.5% Quarterly
 
-## Contract Address (CA)
+## BARK Token Address (CA)
 
 - **Mainnet**: [`GsFjUCEsRwXHyahR8XsnnJYrgxBjADwnNJ1wbJbGdMVK`](https://explorer.solana.com/address/GsFjUCEsRwXHyahR8XsnnJYrgxBjADwnNJ1wbJbGdMVK)
 - **Devnet:**  [`26LtcueLjUVuNUPFBxVA2X3gLtpCD2hqefxnDau9AeFc`](https://explorer.solana.com/address/26LtcueLjUVuNUPFBxVA2X3gLtpCD2hqefxnDau9AeFc/transfers?-cluster=devnet)
+
+## BARK Real-World Asset Token (BRWA)
+
+- **mint**: [`9HugtrjX2Eg9ZZ1zPRwbxfuSKGn6cEeDmWxE9V4cHRwy`](https://core.metaplex.com/explorer/9HugtrjX2Eg9ZZ1zPRwbxfuSKGn6cEeDmWxE9V4cHRwy)
 
 ## Account:
 
@@ -75,7 +79,9 @@ To interact with BARK tokens, you will need a Solana wallet set up. Recommend us
 
 Stay tuned for updates on governance features and how you can participate in decision-making processes using your BARK tokens.
 
-**Solana Realm**:
+**Governance DAO**:
+
+- Solana Realms**: https://realms.today
 
 ## Development
 
@@ -87,6 +93,6 @@ We encourage testing on Solana's Devnet before interacting with the main contrac
 
 ## Resources
 
-- [Documentation](https://github.com/bark-token/barkpaper_v1.0)
+- [Whitepaper]()
 - [Initial Token Offering (ITO)]() TBA
 - [Token Sale Platform]()

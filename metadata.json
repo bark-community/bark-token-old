@@ -6,10 +6,11 @@
   "animation_url": null,
   "extensions": {
     "website": "https://barkprotocol.net",
+    "projects": "https://barktoken.app",
     "token_sale_dashboard": "https://invest.barkprotocol.net",
     "bark_dao": "https://app.realms.today/realm/bark/hub",
     "twitter": "https://twitter.com/bark_protocol",
-    "discord": "https://discord.gg/CjUeKEB7b6",
+    "discord": "https://discord.gg/H9en8eHzn2",
     "telegram": "https://t.me/+EnczyzzKS_k2NmQ0",
     "medium": "https://medium.com/@barkprotocol"
   },
@@ -24,7 +25,7 @@
     },
     {
       "trait_type": "Asset Type",
-      "value": "Real-World Asset (RWA)"
+      "value": "Real-World Asset (BRWA)"
     },
     {
       "trait_type": "Community Driven",

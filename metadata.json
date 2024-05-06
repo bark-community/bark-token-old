@@ -1,7 +1,8 @@
 {
   "name": "BARK",
   "symbol": "BARK",
-  "description": "BARK, a real-world asset token (BRWA) on the Solana blockchain, driven by community contributions. It aims to offer transparent, secure, and community-driven financial operations, integrating blockchain's trust and efficiency with real-world asset values.",
+  "description": "BARK is not only a meme token. It is a real-world asset token (BRWA) built on the Solana blockchain, meticulously crafted through collective community efforts. BARK is designed to facilitate transparent, secure, and community-driven financial operations, seamlessly blending blockchain's integrity and efficiency with tangible real-world asset values. BARK partners with Social Finance (SoFi) to bring innovation and inclusivity to the forefront of decentralized finance.",
+  "version": "1.0.0",
   "image": "https://raw.githubusercontent.com/bark-community/bark-token/main/src/assets/bark.svg",
   "animation_url": null,
   "extensions": {

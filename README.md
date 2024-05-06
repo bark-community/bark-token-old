@@ -35,7 +35,8 @@ BARK serves as both a utility and a governance token within the BARK platform. I
 
 ## BARK Token Address (CA)
 
-- **Mainnet**: [`6Q2eWm7L4CrZPvx3yzZaSHRyKnNZd8pBNtqWjPgiu8RP`](https://solscan.io/token/6Q2eWm7L4CrZPvx3yzZaSHRyKnNZd8pBNtqWjPgiu8RP)
+- **Mainnet**: [`6cQJMLNHE8SvLarrKmi38iKX31hzw7na77wnPCHRxR5z`](https://solscan.io/token/6cQJMLNHE8SvLarrKmi38iKX31hzw7na77wnPCHRxR5z)
+- 
 - **Devnet:**  [`26LtcueLjUVuNUPFBxVA2X3gLtpCD2hqefxnDau9AeFc`](https://explorer.solana.com/address/26LtcueLjUVuNUPFBxVA2X3gLtpCD2hqefxnDau9AeFc/transfers?-cluster=devnet)
 
 ## BARK Real-World Asset Token (BRWA)

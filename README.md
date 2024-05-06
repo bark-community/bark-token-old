@@ -12,7 +12,7 @@ BARK Token (BARK) can be used for various purposes within the BARK ecosystem. Pl
 
 *Notice: This main.ts program is developed on the Devnet and tested on Solana Playground.*
 
-## About BARK Token
+## About BARK Token (BARK)
 
 BARK serves as both a utility and a governance token within the BARK platform. It aims to:
 
@@ -24,10 +24,10 @@ BARK serves as both a utility and a governance token within the BARK platform. I
 
 - **Name**: BARK
 - **Symbol**: BARK
-- **Decimals**: 6
+- **Decimals**: 9
 - **Token Type**: SPL-20
-- **Max Supply**: 25 Billion
-- **Minted Supply**: 25 Billion
+- **Max Supply**: 18.44 Billion
+- **Minted Supply**: 18.44 Billion
 - **Interest Bearing Rate**: 5%
 - **Fee Basis Points**: 500 (5% of each transaction)
 - **Max Fee**: 1000 Basis Points (10% of each transaction)
@@ -35,16 +35,12 @@ BARK serves as both a utility and a governance token within the BARK platform. I
 
 ## BARK Token Address (CA)
 
-- **Mainnet**: [`GsFjUCEsRwXHyahR8XsnnJYrgxBjADwnNJ1wbJbGdMVK`](https://explorer.solana.com/address/GsFjUCEsRwXHyahR8XsnnJYrgxBjADwnNJ1wbJbGdMVK)
+- **Mainnet**: [`6Q2eWm7L4CrZPvx3yzZaSHRyKnNZd8pBNtqWjPgiu8RP`](https://solscan.io/token/6Q2eWm7L4CrZPvx3yzZaSHRyKnNZd8pBNtqWjPgiu8RP)
 - **Devnet:**  [`26LtcueLjUVuNUPFBxVA2X3gLtpCD2hqefxnDau9AeFc`](https://explorer.solana.com/address/26LtcueLjUVuNUPFBxVA2X3gLtpCD2hqefxnDau9AeFc/transfers?-cluster=devnet)
 
 ## BARK Real-World Asset Token (BRWA)
 
 - **mint**: [`9HugtrjX2Eg9ZZ1zPRwbxfuSKGn6cEeDmWxE9V4cHRwy`](https://core.metaplex.com/explorer/9HugtrjX2Eg9ZZ1zPRwbxfuSKGn6cEeDmWxE9V4cHRwy)
-
-## Account:
-
-**SolScan**:https://solscan.io/account/5NFpCtYGhvjx2rp89pB7yhRta4NxHjQNvh3kukYRr2c
 
 ## Key Features:
 

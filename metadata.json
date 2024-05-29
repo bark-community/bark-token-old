@@ -1,18 +1,18 @@
 {
   "name": "BARK",
   "symbol": "BARK",
-  "description": "BARK is not only a meme token. It is a real-world asset token (BRWA) built on the Solana blockchain, meticulously crafted through collective community efforts. BARK is designed to facilitate transparent, secure, and community-driven financial operations, seamlessly blending blockchain's integrity and efficiency with tangible real-world asset values. BARK partners with Social Finance (SoFi) to bring innovation and inclusivity to the forefront of decentralized finance.",
+  "description": "BARK is not only a meme token. It is a real-world asset token built on the Solana blockchain, meticulously crafted through collective community efforts. BARK is designed to facilitate transparent, secure, and community-driven financial operations, seamlessly blending blockchain's integrity and efficiency with tangible real-world asset values. BARK partners with Social Finance (SoFi) to bring innovation and inclusivity to the forefront of decentralized finance.",
   "version": "1.0.0",
   "image": "https://raw.githubusercontent.com/bark-community/bark-token/main/src/assets/bark.svg",
   "animation_url": null,
   "extensions": {
-    "website": "https://barkprotocol.net",
+    "website": "https://barkprotocol.com",
     "token": "https://barktoken.app",
     "governance": "https://app.realms.today/realm/BARK",
     "ico_ito_token_sale_dashboard": "https://invest.barktoken.app",
     "twitter": "https://twitter.com/bark_protocol",
     "discord": "https://discord.gg/H9en8eHzn2",
-    "telegram": "https://t.me/+EnczyzzKS_k2NmQ0",
+    "telegram": "https://t.me/bark_protocol",
     "medium": "https://medium.com/@barkprotocol"
   },
   "attributes": [

@@ -1,7 +1,7 @@
 ![icon](https://github.com/bark-community/bark-token/blob/d97f533bbe934c60d0dac3a707125d055f115472/src/assets/bark.png)
 
 # BARK Token
-**Version 1.0.0**
+**Version 1.0.1**
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
 
@@ -25,9 +25,9 @@ BARK serves as both a utility and a governance token within the BARK platform. I
 - **Name**: BARK
 - **Symbol**: BARK
 - **Decimals**: 9
-- **Token Type**: SPL-20
+- **Platform:** Solana
+- **Token Type**: Token-2022
 - **Max Supply**: 18.44 Billion
-- **Minted Supply**: 18.44 Billion
 - **Interest Bearing Rate**: 5%
 - **Fee Basis Points**: 500 (5% of each transaction)
 - **Max Fee**: 1000 Basis Points (10% of each transaction)
@@ -46,18 +46,18 @@ BARK serves as both a utility and a governance token within the BARK platform. I
 ## Key Features:
 
 - **Governance**: Token holders can participate in governance votes to influence the development and direction of the BARK platform.
-- **Utility**: BARK tokens can be used across a variety of applications and services within the BARK ecosystem.
+- **Utility**: BARK tokens (BARK) can be used across a variety of applications and services within the BARK Protocol ecosystem.
 - **Fee Redistribution**: Transaction fees are redistributed to support the ongoing development of the BARK platform and reward active community members.
 - **Humanitarian Aid**: Providing assistance to communities affected by natural disasters, conflicts, or other crises, ensuring access to essential resources and support.
 
 ## Getting Started
 
-To interact with BARK tokens, you will need a Solana wallet set up. Recommend using [Phantom](https://phantom.app/) or [Sollet](https://www.sollet.io/).
+To interact with BARK tokens, you will need a Solana wallet set up. Recommend using [Phantom](https://phantom.app/) or [Solflare](https://www.solflare.com/).
 
 ### Transferring BARK Tokens
 
 1. Ensure you have SOL in your wallet to cover transaction fees.
-2. Use the wallet interface to add BARK Token using the contract (CA) address provided above.
+2. Use the wallet interface to add BARK Token using the contract address provided above.
 3. Transfer BARK tokens to any Solana address as you would with SOL.
 
 ## BARK Test Tokens
@@ -78,7 +78,7 @@ Stay tuned for updates on governance features and how you can participate in dec
 
 **Governance DAO**:
 
-- Solana Realms**: https://realms.today
+- Solana Realms**: https://realms.today/
 
 ## Development
 

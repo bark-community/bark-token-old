@@ -4,6 +4,7 @@
   "description": "BARK is not only a meme token. It is a real-world asset token built on the Solana blockchain, meticulously crafted through collective community efforts. BARK is designed to facilitate transparent, secure, and community-driven financial operations, seamlessly blending blockchain's integrity and efficiency with tangible real-world asset values. BARK partners with Social Finance (SoFi) to bring innovation and inclusivity to the forefront of decentralized finance.",
   "version": "1.0.0",
   "image": "https://raw.githubusercontent.com/bark-community/bark-token/main/src/assets/bark.svg",
+  "image_url": "https://ipfs.io/ipfs/QmXCJ5WjaKf7BWkXmPW3b9xFiSeRqmQx21ihYmGWavewTz?filename=bark-token.png",
   "animation_url": null,
   "extensions": {
     "website": "https://barkprotocol.com",

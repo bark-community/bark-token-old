@@ -29,7 +29,7 @@ BARK serves as both a utility and a governance token within the BARK platform. I
 - **Token Type**: Token-2022
 - **Max Supply**: 18.44 Billion
 - **Interest Bearing Rate**: 5%
-- **Fee Basis Points**: 2500 (5% of each transaction)
+- **Fee Basis Points**: 250 (2.5% of each transaction)
 - **Max Fee**: 500 Basis Points (5% of each transaction)
 - **Burn Rate**: 2.5% Quarterly
 

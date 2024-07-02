@@ -1,18 +1,18 @@
 ![icon](https://github.com/bark-community/bark-token/blob/d97f533bbe934c60d0dac3a707125d055f115472/src/assets/bark.png)
 
-# BARK Token
-**Version 1.0.1**
+# BARK Protocol Token // This token refactored or burned
+**Version 1.0.5**
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
 
-The BARK Token Program is a sophisticated Solana-based program designed to streamline the creation, transfer, staking and management of BARK tokens on the Solana blockchain. This sample version includes integration with the TypeScript language and the Anchor framework for improved type safety and efficient program development.
+The BARK Protocol Token Program is a sophisticated Solana-based program designed to streamline the creation, transfer, staking and management of BARK on the Solana blockchain. This sample version includes integration with the TypeScript language and the Anchor framework for improved type safety and efficient program development.
 
 ## Usage
-BARK Token (BARK) can be used for various purposes within the BARK ecosystem. Please refer to the BARK Token documentation for detailed usage instructions.
+BARK Token (BARK) can be used for various purposes within the BARK Protocol ecosystem. Please refer to the documentation for detailed usage instructions.
 
 *Notice: This main.ts program is developed on the Devnet and tested on Solana Playground.*
 
-## About BARK Token (BARK)
+## About BARK Token
 
 BARK serves as both a utility and a governance token within the BARK platform. It aims to:
 
@@ -22,18 +22,18 @@ BARK serves as both a utility and a governance token within the BARK platform. I
 
 ## Tokenomics
 
-- **Name**: BARK
-- **Symbol**: BARK
+- **Name**: 
+- **Symbol**: 
 - **Decimals**: 9
 - **Platform:** Solana
 - **Token Type**: Token-2022
 - **Max Supply**: 18.44 Billion
 - **Interest Bearing Rate**: 5%
-- **Fee Basis Points**: 250 (2.5% of each transaction)
+- **Fee Basis Points**: 280 (2.8% of each transaction)
 - **Max Fee**: 500 Basis Points (5% of each transaction)
 - **Burn Rate**: 2.5% Quarterly
 
-## BARK Token Address (CA)
+## BARK Protocol Token Address (CA)
 
 - **Mainnet**: [`6cQJMLNHE8SvLarrKmi38iKX31hzw7na77wnPCHRxR5z`](https://solscan.io/token/6cQJMLNHE8SvLarrKmi38iKX31hzw7na77wnPCHRxR5z)
 
